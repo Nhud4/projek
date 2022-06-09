@@ -16,18 +16,40 @@ exports.getDataMerek = async (req, res, next) => {
 
 // get merek by kd
 exports.getMerekByKode = async (req, res) => {
-  const kd_merek = req.params.kd_merek;
-  connection.query(
-    "SELECT merek FROM tb_merek WHERE kd_merek = ?",
-    [kd_merek],
-    function (error, rows, fileds) {
-      if (error) {
-        console.log(error);
+  const get = {
+    kd_merek: req.body.kd_merek,
+  };
+
+  let query = "SELECT kd_merek FROM ?? WHERE ??=?";
+  const table = ["tb_merek", "kd_merek", get.kd_merek];
+
+  query = mysql.format(query, table);
+
+  connection.query(query, function (error, rows) {
+    if (error) {
+      console.log(error);
+    } else {
+      if (!get.kd_merek) {
+        response.null("kode merek tidak boleh kosong", res);
       } else {
-        response.ok(rows, res);
+        if (rows.length > 0) {
+          let query = "SELECT merek FROM ?? WHERE kd_merek=?";
+          const table = ["tb_merek", get.kd_merek];
+
+          query = mysql.format(query, table);
+          connection.query(query, get, function (error, rows) {
+            if (error) {
+              console.log(error);
+            } else {
+              response.ok(rows, res);
+            }
+          });
+        } else {
+          response.null("kode tidak ditemukan", res);
+        }
       }
     }
-  );
+  });
 };
 
 // add merek
@@ -43,7 +65,7 @@ exports.addMerek = async (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      if (post.merek !== 0) {
+      if (!post.merek) {
         response.null("data kosong", res);
       } else {
         if (rows.length === 0) {
@@ -83,7 +105,7 @@ exports.updateMerek = async (req, res) => {
       console.log(error);
     } else {
       if (!up.kd_merek) {
-        response.null("id kosong", res);
+        response.null("Kode kosong", res);
       } else {
         if (up.kd_merek) {
           let query = "SELECT kd_merek FROM ?? WHERE kd_merek=?";
@@ -111,7 +133,6 @@ exports.updateMerek = async (req, res) => {
                         query = mysql.format(query, table);
 
                         connection.query(query, up, function (error, rows) {
-                          console.log(rows);
                           if (error) {
                             console.log(error);
                           } else {
