@@ -7,6 +7,12 @@ const ram = require("../controller/ram");
 const penyimpanan = require("../controller/penyimpanan");
 const display = require("../controller/display");
 const vga = require("../controller/vga");
+const laptop = require("../controller/lapptop");
+
+// list
+const list = require("../bin/api_listTable");
+router.get("/list/table", list.listTable);
+router.get("/show/table", list.showTable);
 
 // merek
 router.get("/merek", merek.getDataMerek);
@@ -49,5 +55,9 @@ router.get("/vga/bykode", vga.getVgaByKode);
 router.post("/vga/add", vga.addVga);
 router.put("/vga/update", vga.updateVga);
 router.delete("/vga/delete", vga.deleteVga);
+
+// laptop
+router.post("/laptop/add", laptop.addLaptop);
+router.get("/laptop", laptop.getLaptop);
 
 module.exports = router;
