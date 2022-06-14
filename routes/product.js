@@ -59,5 +59,8 @@ router.delete("/vga/delete", vga.deleteVga);
 // laptop
 router.post("/laptop/add", laptop.addLaptop);
 router.get("/laptop", laptop.getLaptop);
+router.get("/laptop/byId", laptop.getLaptopById);
+router.put("/laptop/update", laptop.updateLaptop);
+router.delete("/laptop/delete", laptop.deleteLaptop);
 
 module.exports = router;
