@@ -16,8 +16,8 @@ exports.addLaptop = async (req, res) => {
     harga: req.body.harga,
   };
 
-  let query = "SELECT * FROM ??";
-  const table = ["tb_laptop"];
+  let query = "SELECT merek_kd, laptop FROM ?? WHERE merek_kd=? AND laptop=? ";
+  const table = ["tb_laptop", post.merek_kd, post.laptop];
 
   query = mysql.format(query, table);
 
@@ -57,7 +57,7 @@ exports.addLaptop = async (req, res) => {
 
                         connection.query(query, post, function (error, rows) {
                           if (error) {
-                            response.exists("data laptop telaha ada", res);
+                            console.log(error);
                           } else {
                             response.ok("berhasil menambahkan data", res);
                           }

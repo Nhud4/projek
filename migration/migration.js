@@ -74,7 +74,7 @@ function migration() {
                                                         vga_kd INT(25) NOT NULL,
                                                         display_kd INT(25) NOT NULL,
                                                         harga VARCHAR(50) NOT NULL,
-                                                        PRIMARY KEY(id),
+                                                        CONSTRAINT PK_laptop PRIMARY KEY(id),
                                                         CONSTRAINT FK_merek FOREIGN KEY(merek_kd) REFERENCES tb_merek(kd_merek),
                                                         CONSTRAINT FK_processor FOREIGN KEY(processor_kd) REFERENCES tb_processor(kd_processor),
                                                         CONSTRAINT FK_ram FOREIGN KEY(ram_kd) REFERENCES tb_ram(kd_ram),
@@ -103,6 +103,60 @@ function migration() {
   console.log("migrasi berjalan");
 }
 
+function perhitungan() {
+  let query = `CREATE TABLE IF NOT EXISTS tb_bobot(
+    kode VARCHAR(15) NOT NULL,
+    processor INT(11) NOT NULL,
+    ram INT(11) NOT NULL,
+    penyimpanan INT(11) NOT NULL,
+    vga INT(11) NOT NULL,
+    display INT(11) NOT NULL,
+    harga VARCHAR(50) NOT NULL,
+    PRIMARY KEY(kode)
+  )`;
+  connection.query(query, function (error, rows) {
+    if (error) {
+      console.log(error);
+    } else {
+      query = `CREATE TABLE IF NOT EXISTS tb_alternatif(
+        kode INT(11) NOT NULL AUTO_INCREMENT,
+        id_laptop INT(25) NOT NULL,
+        processor INT(11) NOT NULL,
+        ram INT(11) NOT NULL,
+        penyimpanan INT(11) NOT NULL,
+        vga INT(11) NOT NULL,
+        display INT(11) NOT NULL,
+        PRIMARY KEY(kode),
+        CONSTRAINT FK_laptop FOREIGN KEY(id_laptop) REFERENCES tb_laptop(id)
+      )`;
+
+      connection.query(query, function (error, rows) {
+        if (error) {
+          console.log(error);
+        } else {
+          query = `CREATE TABLE IF NOT EXISTS tb_pembagi(
+            kode INT(11) NOT NULL AUTO_INCREMENT,
+            c1 VARCHAR(100) NOT NULL,
+            c2 VARCHAR(100) NOT NULL,
+            c3 VARCHAR(100) NOT NULL,
+            c4 VARCHAR(100) NOT NULL,
+            c5 VARCHAR(100) NOT NULL,
+            c6 VARCHAR(100) NOT NULL,
+            PRIMARY KEY(kode)
+          )`;
+          connection.query(query, function (error, rows) {
+            if (error) {
+              console.log(error);
+            }
+          });
+        }
+      });
+    }
+  });
+  console.log("tabel perhitunagn telah di buat");
+}
+
 module.exports = {
   migration,
+  perhitungan,
 };
