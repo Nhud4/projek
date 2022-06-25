@@ -14,23 +14,9 @@ const office = require("../controller/asset/office");
 const bobot = require("../topsis/bobot");
 const alternatif = require("../topsis/alternatif");
 
-const nilaiBobot = require("../topsis/rumus/getBobot");
-const normalisasiTerbobot = require("../topsis/rumus/normalisasiTerbobot");
-const ideal = require("../topsis/rumus/idela");
-const jarakIdeal = require("../topsis/rumus/jarakIdeal");
-const preferensi = require("../topsis/rumus/preferensiAlternatif");
-const coba = require("../topsis/rumus/coba");
+const gameKa1 = require("../topsis/request/request");
 
-router.get("/nilai/bobot", nilaiBobot.getBobotKA1);
-router.get("/nilai/bobot/processor", nilaiBobot.getProcessorBobotKA1);
-router.get("/normalisasi/terbobot", normalisasiTerbobot.normalisasiTerbobot);
-router.get("/ideal/positif", ideal.idealPositif);
-router.get("/ideal/negatif", ideal.idealNegatif);
-router.get("/jarak/ideal/positif", jarakIdeal.jarakIdealPositif);
-router.get("/jarak/ideal/negatif", jarakIdeal.jarakIdealNegatif);
-router.get("/preferensi", preferensi.preferensi);
-router.get("/rangking", preferensi.rangking);
-router.get("/coba", coba.lagi);
+router.get("/game/by", gameKa1.gameKa1);
 
 // list
 const list = require("../bin/api_listTable");

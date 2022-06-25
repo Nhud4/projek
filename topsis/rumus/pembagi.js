@@ -17,7 +17,7 @@ const processor = async () => {
   });
   const totalProcessor = processor.reduce((a, b) => a + b);
   const akarProcessor = [Math.sqrt(totalProcessor)];
-  console.log(akarProcessor);
+
   return akarProcessor;
 };
 
@@ -28,7 +28,7 @@ const ram = async () => {
   });
   const totalRam = ram.reduce((a, b) => a + b);
   const akarRam = [Math.sqrt(totalRam)];
-  console.log(akarRam);
+
   return akarRam;
 };
 
@@ -39,7 +39,7 @@ const penyimpanan = async () => {
   });
   const totalPenyimpanan = penyimpanan.reduce((a, b) => a + b);
   const akarPenyimpanan = [Math.sqrt(totalPenyimpanan)];
-  console.log(akarPenyimpanan);
+
   return akarPenyimpanan;
 };
 
@@ -50,7 +50,7 @@ const vga = async () => {
   });
   const totalVga = vga.reduce((a, b) => a + b);
   const akarVga = [Math.sqrt(totalVga)];
-  console.log(akarVga);
+
   return akarVga;
 };
 
@@ -61,7 +61,7 @@ const display = async () => {
   });
   const totalDisplay = display.reduce((a, b) => a + b);
   const akarDisplay = [Math.sqrt(totalDisplay)];
-  console.log(akarDisplay);
+
   return akarDisplay;
 };
 
@@ -72,7 +72,7 @@ const harga = async () => {
   });
   const totalHarga = harga.reduce((a, b) => a + b);
   const akarHarga = [Math.sqrt(totalHarga)];
-  console.log(akarHarga);
+
   return akarHarga;
 };
 

@@ -7,7 +7,6 @@ const getBobotKA1 = async () => {
   for (let i = 0; i < nilai.length; i++) {
     array[i] = nilai[i];
   }
-  console.log(array);
 
   return array;
 };
@@ -18,7 +17,6 @@ const getProcessorBobotKA1 = async () => {
   for (let i = 0; i < processor.length; i++) {
     nilai[i] = processor[i];
   }
-  // console.log(nilai);
 
   return nilai;
 };

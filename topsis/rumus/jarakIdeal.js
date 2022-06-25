@@ -1,109 +1,164 @@
-const mysql = require("mysql2");
 const ideal = require("./idela");
 const normalisasi = require("./normalisasiTerbobot");
 
 const jarakIdealPositif = async () => {
-  const nilai = await normalisasi.normalisasiTerbobot();
-  const terbobot = [];
-  for (let a = 0; a < nilai.length; a++) {
-    terbobot[a] = nilai[a];
+  const processor = await normalisasi.normalisasiProcessor();
+  const ram = await normalisasi.normalisasiRam();
+  const penyimpanan = await normalisasi.normalisasiPenyimpanan();
+  const vga = await normalisasi.normalisasiVga();
+  const display = await normalisasi.normalisasiDisplay();
+  const harga = await normalisasi.normalisasiHarga();
+
+  const n2 = await ideal.idealPositif();
+
+  // processor
+  const penguranganProcessor = processor.map(function (processor) {
+    return processor - n2[0];
+  });
+  const pangkatProcessor = penguranganProcessor.map(function (
+    penguranganProcessor
+  ) {
+    return Math.pow(penguranganProcessor, 2);
+  });
+
+  // ram
+  const penguranganRam = ram.map(function (penguranganRam) {
+    return penguranganRam - n2[1];
+  });
+  const pangkatRam = penguranganRam.map(function (penguranganRam) {
+    return Math.pow(penguranganRam, 2);
+  });
+
+  // penyimpanan
+  const penguranganPenyimpanan = penyimpanan.map(function (
+    penguranganPenyimpanan
+  ) {
+    return penguranganPenyimpanan - n2[2];
+  });
+  const pangkatPenyimpanan = penguranganPenyimpanan.map(function (
+    penguranganPenyimpanan
+  ) {
+    return Math.pow(penguranganPenyimpanan, 2);
+  });
+  // vga
+  const penguranganVga = vga.map(function (penguranganVga) {
+    return penguranganVga - n2[3];
+  });
+  const pangkatVga = penguranganVga.map(function (penguranganVga) {
+    return Math.pow(penguranganVga, 2);
+  });
+  // display
+  const penguranganDisplay = display.map(function (penguranganDisplay) {
+    return penguranganDisplay - n2[4];
+  });
+  const pangkatDisplay = penguranganDisplay.map(function (penguranganDisplay) {
+    return Math.pow(penguranganDisplay, 2);
+  });
+  // harga
+  const penguranganHarga = harga.map(function (penguranganHarga) {
+    return penguranganHarga - n2[5];
+  });
+  const pangkatHarga = penguranganHarga.map(function (penguranganHarga) {
+    return Math.pow(penguranganHarga, 2);
+  });
+
+  const baris1 = pangkatProcessor.length;
+  const tambah = [];
+  for (let i = 0; i < baris1; i++) {
+    tambah[i] =
+      pangkatProcessor[i] +
+      pangkatRam[i] +
+      pangkatPenyimpanan[i] +
+      pangkatVga[i] +
+      pangkatDisplay[i] +
+      pangkatHarga[i];
   }
 
-  const nilaiIdeal = await ideal.idealPositif();
+  const hasil = tambah.map(function (tambah) {
+    return Math.sqrt(tambah);
+  });
 
-  const positif = [];
-  for (let i = 0; i < nilaiIdeal.length; i++) {
-    positif[i] = nilaiIdeal[i];
-  }
-
-  const jarakPositif = [
-    Math.sqrt(
-      Math.pow(positif[0] - terbobot[0][0], 2) +
-        Math.pow(positif[1] - terbobot[1][0], 2) +
-        Math.pow(positif[2] - terbobot[2][0], 2) +
-        Math.pow(positif[3] - terbobot[3][0], 2) +
-        Math.pow(positif[4] - terbobot[4][0], 2) +
-        Math.pow(positif[5] - terbobot[5][0], 2)
-    ),
-    Math.sqrt(
-      Math.pow(positif[0] - terbobot[0][1], 2) +
-        Math.pow(positif[1] - terbobot[1][1], 2) +
-        Math.pow(positif[2] - terbobot[2][1], 2) +
-        Math.pow(positif[3] - terbobot[3][1], 2) +
-        Math.pow(positif[4] - terbobot[4][1], 2) +
-        Math.pow(positif[5] - terbobot[5][1], 2)
-    ),
-    Math.sqrt(
-      Math.pow(positif[0] - terbobot[0][2], 2) +
-        Math.pow(positif[1] - terbobot[1][2], 2) +
-        Math.pow(positif[2] - terbobot[2][2], 2) +
-        Math.pow(positif[3] - terbobot[3][2], 2) +
-        Math.pow(positif[4] - terbobot[4][2], 2) +
-        Math.pow(positif[5] - terbobot[5][2], 2)
-    ),
-    Math.sqrt(
-      Math.pow(positif[0] - terbobot[0][3], 2) +
-        Math.pow(positif[1] - terbobot[1][3], 2) +
-        Math.pow(positif[2] - terbobot[2][3], 2) +
-        Math.pow(positif[3] - terbobot[3][3], 2) +
-        Math.pow(positif[4] - terbobot[4][3], 2) +
-        Math.pow(positif[5] - terbobot[5][3], 2)
-    ),
-  ];
-
-  //   console.log(jarakPositif);
-  return jarakPositif;
+  return hasil;
 };
 
 const jarakIdealNegatif = async () => {
-  const nilai = await normalisasi.normalisasiTerbobot();
-  const terbobot = [];
-  for (let a = 0; a < nilai.length; a++) {
-    terbobot[a] = nilai[a];
-  }
-  const nilaiIdeal = await ideal.idealNegatif();
+  const processor = await normalisasi.normalisasiProcessor();
+  const ram = await normalisasi.normalisasiRam();
+  const penyimpanan = await normalisasi.normalisasiPenyimpanan();
+  const vga = await normalisasi.normalisasiVga();
+  const display = await normalisasi.normalisasiDisplay();
+  const harga = await normalisasi.normalisasiHarga();
 
-  const negatif = [];
-  for (let i = 0; i < nilaiIdeal.length; i++) {
-    negatif[i] = nilaiIdeal[i];
+  const n2 = await ideal.idealNegatif();
+
+  // processor
+  const penguranganProcessor = processor.map(function (processor) {
+    return processor - n2[0];
+  });
+  const pangkatProcessor = penguranganProcessor.map(function (
+    penguranganProcessor
+  ) {
+    return Math.pow(penguranganProcessor, 2);
+  });
+
+  // ram
+  const penguranganRam = ram.map(function (penguranganRam) {
+    return penguranganRam - n2[1];
+  });
+  const pangkatRam = penguranganRam.map(function (penguranganRam) {
+    return Math.pow(penguranganRam, 2);
+  });
+
+  // penyimpanan
+  const penguranganPenyimpanan = penyimpanan.map(function (
+    penguranganPenyimpanan
+  ) {
+    return penguranganPenyimpanan - n2[2];
+  });
+  const pangkatPenyimpanan = penguranganPenyimpanan.map(function (
+    penguranganPenyimpanan
+  ) {
+    return Math.pow(penguranganPenyimpanan, 2);
+  });
+  // vga
+  const penguranganVga = vga.map(function (penguranganVga) {
+    return penguranganVga - n2[3];
+  });
+  const pangkatVga = penguranganVga.map(function (penguranganVga) {
+    return Math.pow(penguranganVga, 2);
+  });
+  // display
+  const penguranganDisplay = display.map(function (penguranganDisplay) {
+    return penguranganDisplay - n2[4];
+  });
+  const pangkatDisplay = penguranganDisplay.map(function (penguranganDisplay) {
+    return Math.pow(penguranganDisplay, 2);
+  });
+  // harga
+  const penguranganHarga = harga.map(function (penguranganHarga) {
+    return penguranganHarga - n2[5];
+  });
+  const pangkatHarga = penguranganHarga.map(function (penguranganHarga) {
+    return Math.pow(penguranganHarga, 2);
+  });
+
+  const baris1 = pangkatProcessor.length;
+  const tambah = [];
+  for (let i = 0; i < baris1; i++) {
+    tambah[i] =
+      pangkatProcessor[i] +
+      pangkatRam[i] +
+      pangkatPenyimpanan[i] +
+      pangkatVga[i] +
+      pangkatDisplay[i] +
+      pangkatHarga[i];
   }
 
-  const jarakNegatif = [
-    Math.sqrt(
-      Math.pow(negatif[0] - terbobot[0][0], 2) +
-        Math.pow(negatif[1] - terbobot[1][0], 2) +
-        Math.pow(negatif[2] - terbobot[2][0], 2) +
-        Math.pow(negatif[3] - terbobot[3][0], 2) +
-        Math.pow(negatif[4] - terbobot[4][0], 2) +
-        Math.pow(negatif[5] - terbobot[5][0], 2)
-    ),
-    Math.sqrt(
-      Math.pow(negatif[0] - terbobot[0][1], 2) +
-        Math.pow(negatif[1] - terbobot[1][1], 2) +
-        Math.pow(negatif[2] - terbobot[2][1], 2) +
-        Math.pow(negatif[3] - terbobot[3][1], 2) +
-        Math.pow(negatif[4] - terbobot[4][1], 2) +
-        Math.pow(negatif[5] - terbobot[5][1], 2)
-    ),
-    Math.sqrt(
-      Math.pow(negatif[0] - terbobot[0][2], 2) +
-        Math.pow(negatif[1] - terbobot[1][2], 2) +
-        Math.pow(negatif[2] - terbobot[2][2], 2) +
-        Math.pow(negatif[3] - terbobot[3][2], 2) +
-        Math.pow(negatif[4] - terbobot[4][2], 2) +
-        Math.pow(negatif[5] - terbobot[5][2], 2)
-    ),
-    Math.sqrt(
-      Math.pow(negatif[0] - terbobot[0][3], 2) +
-        Math.pow(negatif[1] - terbobot[1][3], 2) +
-        Math.pow(negatif[2] - terbobot[2][3], 2) +
-        Math.pow(negatif[3] - terbobot[3][3], 2) +
-        Math.pow(negatif[4] - terbobot[4][3], 2) +
-        Math.pow(negatif[5] - terbobot[5][3], 2)
-    ),
-  ];
-  //   console.log(jarakNegatif);
-  return jarakNegatif;
+  const hasil = tambah.map(function (tambah) {
+    return Math.sqrt(tambah);
+  });
+
+  return hasil;
 };
 
 module.exports = {

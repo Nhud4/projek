@@ -12,18 +12,6 @@ const allBobotKA1 = async () => {
   return rows;
 };
 
-const processorBobotKA1 = async () => {
-  const promisePool = pool.promise();
-
-  const [rows, fields] = await promisePool.query(
-    "SELECT processor FROM tb_bobot WHERE kode='KA1'",
-    [5]
-  );
-
-  return rows;
-};
-
 module.exports = {
   allBobotKA1,
-  processorBobotKA1,
 };

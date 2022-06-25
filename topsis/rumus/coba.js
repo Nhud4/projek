@@ -77,14 +77,14 @@ const harga = async () => {
 };
 
 const lagi = async () => {
-  const n1 = await coba();
-  const n2 = await processor();
+  const n1 = await pembagi.values();
+  const n2 = await pembagi.penyimpanan();
 
-  const n3 = n1.map(function (element) {
-    return element.processor / n2;
+  const hasilPenyimpanan = n1.map(function (element) {
+    return element.penyimpanan / n2;
   });
 
-  console.log(n3);
+  console.log(hasilPenyimpanan);
 };
 
 module.exports = {

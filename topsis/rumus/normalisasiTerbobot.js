@@ -1,60 +1,100 @@
-const mysql = require("mysql2");
 const bobot = require("../query/selectBobot");
-const alternatif = require("./pembagi");
+const ternormalisasi = require("./ternormalisasi");
 
-const normalisasiTerbobot = async () => {
-  const nilai = await bobot.allBobotKA1();
+const normalisasiProcessor = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.processor();
 
-  let nilaiBobot = [];
-  for (let i = 0; i < nilai.length; i++) {
-    nilaiBobot[i] = nilai[i];
-  }
+  const n3 = n1.map(function (element) {
+    return element.processor;
+  });
 
-  const normalisasi = await alternatif.alternatifBobot();
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+  return hasil;
+};
 
-  const normalisasiHasil = [
-    [
-      normalisasi[0][0] * nilaiBobot[0].processor,
-      normalisasi[0][1] * nilaiBobot[0].processor,
-      normalisasi[0][2] * nilaiBobot[0].processor,
-      normalisasi[0][3] * nilaiBobot[0].processor,
-    ],
-    [
-      normalisasi[1][0] * nilaiBobot[0].ram,
-      normalisasi[1][1] * nilaiBobot[0].ram,
-      normalisasi[1][2] * nilaiBobot[0].ram,
-      normalisasi[1][3] * nilaiBobot[0].ram,
-    ],
-    [
-      normalisasi[2][0] * nilaiBobot[0].penyimpanan,
-      normalisasi[2][1] * nilaiBobot[0].penyimpanan,
-      normalisasi[2][2] * nilaiBobot[0].penyimpanan,
-      normalisasi[2][3] * nilaiBobot[0].penyimpanan,
-    ],
-    [
-      normalisasi[3][0] * nilaiBobot[0].vga,
-      normalisasi[3][1] * nilaiBobot[0].vga,
-      normalisasi[3][2] * nilaiBobot[0].vga,
-      normalisasi[3][3] * nilaiBobot[0].vga,
-    ],
-    [
-      normalisasi[4][0] * nilaiBobot[0].display,
-      normalisasi[4][1] * nilaiBobot[0].display,
-      normalisasi[4][2] * nilaiBobot[0].display,
-      normalisasi[4][3] * nilaiBobot[0].display,
-    ],
-    [
-      normalisasi[5][0] * nilaiBobot[0].harga,
-      normalisasi[5][1] * nilaiBobot[0].harga,
-      normalisasi[5][2] * nilaiBobot[0].harga,
-      normalisasi[5][3] * nilaiBobot[0].harga,
-    ],
-  ];
+const normalisasiRam = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.ram();
 
-  // console.log(normalisasiHasil);
-  return normalisasiHasil;
+  const n3 = n1.map(function (element) {
+    return element.ram;
+  });
+
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+
+  return hasil;
+};
+
+const normalisasiPenyimpanan = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.penyimpanan();
+
+  const n3 = n1.map(function (element) {
+    return element.penyimpanan;
+  });
+
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+
+  return hasil;
+};
+
+const normalisasiVga = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.vga();
+
+  const n3 = n1.map(function (element) {
+    return element.vga;
+  });
+
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+
+  return hasil;
+};
+
+const normalisasiDisplay = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.display();
+
+  const n3 = n1.map(function (element) {
+    return element.display;
+  });
+
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+
+  return hasil;
+};
+
+const normalisasiHarga = async () => {
+  const n1 = await bobot.allBobotKA1();
+  const n2 = await ternormalisasi.harga();
+
+  const n3 = n1.map(function (element) {
+    return element.harga;
+  });
+
+  const hasil = n2.map(function (n2) {
+    return n2 * n3;
+  });
+
+  return hasil;
 };
 
 module.exports = {
-  normalisasiTerbobot,
+  normalisasiProcessor,
+  normalisasiRam,
+  normalisasiPenyimpanan,
+  normalisasiVga,
+  normalisasiDisplay,
+  normalisasiHarga,
 };

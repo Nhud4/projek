@@ -73,7 +73,7 @@ function migration() {
                                                         penyimpanan_kd INT(25) NOT NULL,
                                                         vga_kd INT(25) NOT NULL,
                                                         display_kd INT(25) NOT NULL,
-                                                        harga VARCHAR(50) NOT NULL,
+                                                        harga BIGINT(50) NOT NULL,
                                                         CONSTRAINT PK_laptop PRIMARY KEY(id),
                                                         CONSTRAINT FK_merek FOREIGN KEY(merek_kd) REFERENCES tb_merek(kd_merek),
                                                         CONSTRAINT FK_processor FOREIGN KEY(processor_kd) REFERENCES tb_processor(kd_processor),
