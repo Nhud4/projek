@@ -16,10 +16,10 @@ const getListDisplay = async () => {
     }
 }
 
-const getByKd = async (kd_display) => {
+const getByKd = async (id) => {
     const promisePool = pool.promise()
-    const statment = `SELECT * FROM tb_display WHERE kd_display =? AND deleted_at IS NULL`
-    const data = [kd_display]
+    const statment = `SELECT * FROM tb_display WHERE id =? AND deleted_at IS NULL`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -68,11 +68,11 @@ const InsertDisplay = async (type_display, ukuran_display) => {
     }
 }
 
-const deleteDisplay = async (kd_display) => {
+const deleteDisplay = async (id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_display SET deleted_at = NOW()
-    WHERE kd_display =?`
-    const data = [kd_display]
+    WHERE id =?`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -82,11 +82,11 @@ const deleteDisplay = async (kd_display) => {
     }
 }
 
-const updateDisplay = async (type_display, ukuran_display, kd_display) => {
+const updateDisplay = async (type_display, ukuran_display, id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_ram SET  type_display=?, ukuran_display=?
-    WHERE kd_display=? AND deleted_at IS NULL`
-    const data = [type_display, ukuran_display, kd_display]
+    WHERE id=? AND deleted_at IS NULL`
+    const data = [type_display, ukuran_display, id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err

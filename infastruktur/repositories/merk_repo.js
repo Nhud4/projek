@@ -16,10 +16,10 @@ const getListMerk = async () => {
     }
 }
 
-const getByKd = async (kd_merk) => {
+const getByKd = async (id) => {
     const promisePool = pool.promise()
-    const statment = `SELECT * FROM tb_merk WHERE kd_merk =? AND deleted_at IS NULL`
-    const data = [kd_merk]
+    const statment = `SELECT * FROM tb_merk WHERE id =? AND deleted_at IS NULL`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -31,7 +31,7 @@ const getByKd = async (kd_merk) => {
 
 const getByMerk = async (merk) => {
     const promisePool = pool.promise()
-    const statment = `SELECT * FROM tb_penyimpanan WHERE merk=? AND deleted_at IS NULL`
+    const statment = `SELECT * FROM tb_merk WHERE merk=? AND deleted_at IS NULL`
     const data = [merk]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
@@ -55,11 +55,11 @@ const insertMerk = async (merk) => {
     }
 }
 
-const deleteMerk = async (kd_merk) => {
+const deleteMerk = async (id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_merk SET deleted_at = NOW()
-    WHERE kd_merk =?`
-    const data = [kd_merk]
+    WHERE id =?`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -69,11 +69,11 @@ const deleteMerk = async (kd_merk) => {
     }
 }
 
-const updateMerk = async (merk, kd_merk) => {
+const updateMerk = async (merk, id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_merk SET  merk=?, updated_at = NOW()
-    WHERE kd_merk =? AND deleted_at IS NULL`
-    const data = [merk, kd_merk]
+    WHERE id =? AND deleted_at IS NULL`
+    const data = [merk, id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -86,6 +86,7 @@ const updateMerk = async (merk, kd_merk) => {
 module.exports = {
     getListMerk,
     getByKd,
+    getByMerk,
     insertMerk,
     deleteMerk,
     updateMerk

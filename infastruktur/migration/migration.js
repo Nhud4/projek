@@ -3,12 +3,12 @@ const mysql = require("mysql2");
 
 function migration() {
   let query = `CREATE TABLE IF NOT EXISTS tb_merk(
-        kd_merek INT(11) NOT NULL AUTO_INCREMENT,
+        id INT(11) NOT NULL AUTO_INCREMENT,
         merk VARCHAR(50) NOT NULL,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         deleted_at TIMESTAMP NULL,
-        PRIMARY KEY(kd_merek)
+        PRIMARY KEY(id)
     )`;
 
   connection.query(query, function (error, rows) {
@@ -16,92 +16,91 @@ function migration() {
       console.log(error);
     } else {
       query = `CREATE TABLE IF NOT EXISTS tb_processor(
-                kd_processor INT(25) NOT NULL AUTO_INCREMENT,
+                id INT(11) NOT NULL AUTO_INCREMENT,
                 processor VARCHAR(25) NOT NULL,
                 seri_processor VARCHAR(25) NOT NULL,
                 kecepatan_processor VARCHAR(25) NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP NULL,
-                PRIMARY KEY(kd_processor)
+                PRIMARY KEY(id)
             )`;
-
       connection.query(query, function (error, rows) {
         if (error) {
           console.log(error);
         } else {
           query = `CREATE TABLE IF NOT EXISTS tb_ram(
-                        kd_ram INT(25) NOT NULL AUTO_INCREMENT,
+                        id INT(11) NOT NULL AUTO_INCREMENT,
                         type_ram VARCHAR(25) NOT NULL,
                         kapasitas_ram VARCHAR(25) NOT NULL,
                         created_at TIMESTAMP DEFAULT NOW(),
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         deleted_at TIMESTAMP NULL,
-                        PRIMARY KEY(kd_ram)
+                        PRIMARY KEY(id)
                     )`;
           connection.query(query, function (error, rows) {
             if (error) {
               console.log(error);
             } else {
               query = ` CREATE TABLE IF NOT EXISTS tb_penyimpanan(
-                                kd_penyimpanan INT(25) NOT NULL AUTO_INCREMENT,
+                                id INT(11) NOT NULL AUTO_INCREMENT,
                                 type_penyimpanan VARCHAR(25) NOT NULL,
                                 kapasitas_penyimpanan VARCHAR(25) NOT NULL,
                                 created_at TIMESTAMP DEFAULT NOW(),
                                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                 deleted_at TIMESTAMP NULL,
-                                PRIMARY KEY(kd_penyimpanan)
+                                PRIMARY KEY(id)
                             )`;
               connection.query(query, function (error, rows) {
                 if (error) {
                   console.log(error);
                 } else {
                   query = `CREATE TABLE IF NOT EXISTS tb_vga(
-                                        kd_vga INT(25) NOT NULL AUTO_INCREMENT,
+                                        id INT(11) NOT NULL AUTO_INCREMENT,
                                         merk_vga VARCHAR(25) NOT NULL,
                                         kapasitas_vga VARCHAR(25) NOT NULL,
                                         created_at TIMESTAMP DEFAULT NOW(),
                                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                         deleted_at TIMESTAMP NULL,
-                                        PRIMARY KEY (kd_vga)
+                                        PRIMARY KEY (id)
                                     )`;
                   connection.query(query, function (error, rows) {
                     if (error) {
                       console.log(error);
                     } else {
                       query = `CREATE TABLE IF NOT EXISTS tb_display(
-                                                kd_display INT(25) NOT NULL AUTO_INCREMENT,
+                                                id INT(11) NOT NULL AUTO_INCREMENT,
                                                 type_display VARCHAR(25) NOT NULL,
                                                 ukuran_display VARCHAR(25) NOT NULL,
                                                 created_at TIMESTAMP DEFAULT NOW(),
                                                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                                 deleted_at TIMESTAMP NULL,
-                                                PRIMARY KEY(kd_display)
+                                                PRIMARY KEY(id)
                                             )`;
                       connection.query(query, function (error, rows) {
                         if (error) {
                           console.log(error);
                         } else {
                           query = `CREATE TABLE IF NOT EXISTS tb_laptop(
-                                                        id INT(25) NOT NULL AUTO_INCREMENT,
-                                                        merek_kd INT(25) NOT NULL,
+                                                        id INT(11) NOT NULL AUTO_INCREMENT,
+                                                        merk_id INT(11) NOT NULL,
                                                         laptop VARCHAR(50) NOT NULL, 
-                                                        processor_kd INT(25) NOT NULL,
-                                                        ram_kd INT(25) NOT NULL,
-                                                        penyimpanan_kd INT(25) NOT NULL,
-                                                        vga_kd INT(25) NOT NULL,
-                                                        display_kd INT(25) NOT NULL,
-                                                        harga BIGINT(50) NOT NULL,
+                                                        processor_id INT(11) NOT NULL,
+                                                        ram_id INT(11) NOT NULL,
+                                                        penyimpanan_id INT(11) NOT NULL,
+                                                        vga_id INT(11) NOT NULL,
+                                                        display_id INT(11) NOT NULL,
+                                                        harga BIGINT NOT NULL,
                                                         created_at TIMESTAMP DEFAULT NOW(),
                                                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                                         deleted_at TIMESTAMP NULL,
-                                                        CONSTRAINT PK_laptop PRIMARY KEY(id),
-                                                        CONSTRAINT FK_merek FOREIGN KEY(merek_kd) REFERENCES tb_merek(kd_merek),
-                                                        CONSTRAINT FK_processor FOREIGN KEY(processor_kd) REFERENCES tb_processor(kd_processor),
-                                                        CONSTRAINT FK_ram FOREIGN KEY(ram_kd) REFERENCES tb_ram(kd_ram),
-                                                        CONSTRAINT FK_penyimpanan FOREIGN KEY(penyimpanan_kd) REFERENCES tb_penyimpanan(kd_penyimpanan),
-                                                        CONSTRAINT FK_vga FOREIGN KEY(vga_kd) REFERENCES tb_vga(kd_vga),
-                                                        CONSTRAINT FK_display FOREIGN KEY(display_kd) REFERENCES tb_display(kd_display)
+                                                        PRIMARY KEY(id),
+                                                        FOREIGN KEY(merk_id) REFERENCES tb_merk (id) ON DELETE CASCADE,
+                                                        FOREIGN KEY(processor_id) REFERENCES tb_processor(id) ON DELETE CASCADE,
+                                                        FOREIGN KEY(ram_id) REFERENCES tb_ram(id) ON DELETE CASCADE,
+                                                        FOREIGN KEY(penyimpanan_id) REFERENCES tb_penyimpanan(id) ON DELETE CASCADE,
+                                                        FOREIGN KEY(vga_id) REFERENCES tb_vga(id) ON DELETE CASCADE,
+                                                        FOREIGN KEY(display_id) REFERENCES tb_display(id) ON DELETE CASCADE
                                                     )`;
                           connection.query(query, function (error, rows) {
                             if (error) {

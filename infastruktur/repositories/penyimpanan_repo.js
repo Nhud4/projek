@@ -16,10 +16,10 @@ const getListPenyimpanan = async () => {
     }
 }
 
-const getByKd = async (kd_penyimpanan) => {
+const getByKd = async (id) => {
     const promisePool = pool.promise()
     const statment = `SELECT * FROM tb_penyimoanan WHERE kd_penyimoanan =? AND deleted_at IS NULL`
-    const data = [kd_penyimpanan]
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -68,11 +68,11 @@ const insertPenyimpanan = async (type_penyimpanan, kapasitas_penyimpanan) => {
     }
 }
 
-const deletePenyimpanan = async (kd_penyimpanan) => {
+const deletePenyimpanan = async (id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_penyimpanan SET deleted_at = NOW()
-    WHERE kd_penyimpanan =?`
-    const data = [kd_penyimpanan]
+    WHERE id =?`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -82,11 +82,11 @@ const deletePenyimpanan = async (kd_penyimpanan) => {
     }
 }
 
-const updatePenyimpanan = async (type_penyimpanan, kapasitas_penyimpanan, kd_penyimpanan) => {
+const updatePenyimpanan = async (type_penyimpanan, kapasitas_penyimpanan, id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_penyimpanan SET  type_penyimpanan =?, kapasitas_penyimpanan =?, updated_at = NOW()
-    WHERE kd_penyimpanan =? AND deleted_at IS NULL`
-    const data = [type_penyimpanan, kapasitas_penyimpanan, kd_penyimpanan]
+    WHERE id =? AND deleted_at IS NULL`
+    const data = [type_penyimpanan, kapasitas_penyimpanan, id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err

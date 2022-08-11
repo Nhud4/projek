@@ -16,10 +16,10 @@ const getListVga = async () => {
     }
 }
 
-const getByKd = async (kd_vga) => {
+const getByKd = async (id) => {
     const promisePool = pool.promise()
-    const statment = `SELECT * FROM tb_vga WHERE kd_vga =? AND deleted_at IS NULL`
-    const data = [kd_vga]
+    const statment = `SELECT * FROM tb_vga WHERE id =? AND deleted_at IS NULL`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -68,11 +68,11 @@ const InsertVga = async (merek_vga, kapasitas_vga) => {
     }
 }
 
-const deleteVga = async (kd_vga) => {
+const deleteVga = async (id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_vga SET deleted_at = NOW()
-    WHERE kd_vga =?`
-    const data = [kd_vga]
+    WHERE id =?`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -82,11 +82,11 @@ const deleteVga = async (kd_vga) => {
     }
 }
 
-const updateVga = async (merk_vga, kapasitas_vga, kd_vga) => {
+const updateVga = async (merk_vga, kapasitas_vga, id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_ram SET  merk_vga=?, kapasitas_vga=?
-    WHERE kd_vga=? AND deleted_at IS NULL`
-    const data = [merk_vga, kapasitas_vga, kd_vga]
+    WHERE id=? AND deleted_at IS NULL`
+    const data = [merk_vga, kapasitas_vga, id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err

@@ -4,8 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const router = require("./routes/product");
-const migration = require("./migration/migration");
-const ketentuan = require("./migration/ketentuan");
+const migration = require("./infastruktur/migration/migration");
 
 const app = express();
 
@@ -23,6 +22,3 @@ app.listen(port, () => {
 
 migration.migration();
 migration.perhitungan();
-ketentuan.KA();
-ketentuan.KB();
-ketentuan.KC();

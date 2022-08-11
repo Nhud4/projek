@@ -25,17 +25,17 @@ const getListLaptop = async () => {
     tb_laptop.harga
         FROM tb_laptop 
         INNER JOIN tb_merek
-        ON tb_laptop.merek_kd = tb_merek.kd_merek
+        ON tb_laptop.merek_id = tb_merek.id
         INNER JOIN tb_processor
-        ON tb_laptop.processor_kd = tb_processor.kd_processor
+        ON tb_laptop.processor_id = tb_processor.id
         INNER JOIN tb_ram
-        ON tb_laptop.ram_kd = tb_ram.kd_ram
+        ON tb_laptop.ram_id = tb_ram.id
         INNER JOIN tb_penyimpanan
-        ON tb_laptop.penyimpanan_kd = tb_penyimpanan.kd_penyimpanan
+        ON tb_laptop.penyimpanan_id = tb_penyimpanan.id
         INNER JOIN tb_vga
-        ON tb_laptop.vga_kd = tb_vga.kd_vga
+        ON tb_laptop.vga_id = tb_vga.id
         INNER JOIN tb_display
-        ON tb_laptop.display_kd = tb_display.kd_display
+        ON tb_laptop.display_id = tb_display.id
     WHERE deleted_at IS NULL`
     try {
         const [rows, fields] = await promisePool.query(statment)
@@ -66,17 +66,17 @@ const getById = async (id) => {
     tb_laptop.harga
         FROM tb_laptop 
         INNER JOIN tb_merek
-        ON tb_laptop.merek_kd = tb_merek.kd_merek
+        ON tb_laptop.merek_id = tb_merek.id
         INNER JOIN tb_processor
-        ON tb_laptop.processor_kd = tb_processor.kd_processor
+        ON tb_laptop.processor_id = tb_processor.id
         INNER JOIN tb_ram
-        ON tb_laptop.ram_kd = tb_ram.kd_ram
+        ON tb_laptop.ram_id = tb_ram.id_ram
         INNER JOIN tb_penyimpanan
-        ON tb_laptop.penyimpanan_kd = tb_penyimpanan.kd_penyimpanan
+        ON tb_laptop.penyimpanan_id = tb_penyimpanan.id
         INNER JOIN tb_vga
-        ON tb_laptop.vga_kd = tb_vga.kd_vga
+        ON tb_laptop.vga_id = tb_vga.id
         INNER JOIN tb_display
-        ON tb_laptop.display_kd = tb_display.kd_display
+        ON tb_laptop.display_id = tb_display.id
     WHERE deleted_at IS NULL`
     const data = [id]
 
@@ -103,32 +103,32 @@ const getByLaptop = async (laptop) => {
 }
 
 const insertLaptop = async (
-    merek_kd,
+    merek_id,
     laptop,
-    processor_kd,
-    ram_kd,
-    penyimpanan_kd,
-    vga_kd,
-    display_kd,
+    processor_id,
+    ram_id,
+    penyimpanan_id,
+    vga_id,
+    display_id,
     harga) => {
     const promisePool = pool.promise()
     const statment = `INSERT INTO tb_laptop SET
-        merek_kd,
+        merek_id,
         laptop,
-        processor_kd,
-        ram_kd,
-        penyimpanan_kd,
-        vga_kd,
-        display_kd,
+        processor_id,
+        ram_id,
+        penyimpanan_id,
+        vga_id,
+        display_id,
         harga`
     const data = [
-        merek_kd,
+        merek_id,
         laptop,
-        processor_kd,
-        ram_kd,
-        penyimpanan_kd,
-        vga_kd,
-        display_kd,
+        processor_id,
+        ram_id,
+        penyimpanan_id,
+        vga_id,
+        display_id,
         harga
     ]
     try {
@@ -156,34 +156,34 @@ const deleteLaptop = async (id) => {
 }
 
 const updateLaptop = async (
-    merek_kd,
+    merek_id,
     laptop,
-    processor_kd,
-    ram_kd,
-    penyimpanan_kd,
-    vga_kd,
-    display_kd,
+    processor_id,
+    ram_id,
+    penyimpanan_id,
+    vga_id,
+    display_id,
     harga,
     id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_laptop SET
-    merek_kd =?,
+    merek_id =?,
     laptop =?,
-    processor_kd =?,
-    ram_kd =?,
-    penyimpanan_kd =?,
-    vga_kd =?,
-    display_kd =?,
+    processor_id =?,
+    ram_id =?,
+    penyimpanan_id =?,
+    vga_id =?,
+    display_id =?,
     harga =?
     WHERE id =? AND deleted_at IS NULL`
     const data = [
-        merek_kd,
+        merek_id,
         laptop,
-        processor_kd,
-        ram_kd,
-        penyimpanan_kd,
-        vga_kd,
-        display_kd,
+        processor_id,
+        ram_id,
+        penyimpanan_id,
+        vga_id,
+        display_id,
         harga,
         id
     ]

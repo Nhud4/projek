@@ -16,10 +16,10 @@ const getListProcessor = async () => {
     }
 }
 
-const getByKd = async (kd_processor) => {
+const getByKd = async (id) => {
     const promisePool = pool.promise()
-    const statment = `SELECT * FROM tb_processor WHERE kd_processor =? AND deleted_at IS NULL`
-    const data = [kd_processor]
+    const statment = `SELECT * FROM tb_processor WHERE id =? AND deleted_at IS NULL`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -68,11 +68,11 @@ const insertProcessor = async (processor, seri_processor, kecepatan_processor) =
     }
 }
 
-const deleteProcessor = async (kd_processor) => {
+const deleteProcessor = async (id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_processor SET deleted_at = NOW()
-    WHERE kd_processor =?`
-    const data = [kd_processor]
+    WHERE id =?`
+    const data = [id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
@@ -82,11 +82,11 @@ const deleteProcessor = async (kd_processor) => {
     }
 }
 
-const updateProcessor = async (processor, seri_processor, kecepatan_processor, kd_processor) => {
+const updateProcessor = async (processor, seri_processor, kecepatan_processor, id) => {
     const promisePool = pool.promise()
     const statment = `UPDATE tb_ram SET  processor=?, seri_processor=?, kecepatan_processor=?
     WHERE kd_ram =? AND deleted_at IS NULL`
-    const data = [processor, seri_processor, kecepatan_processor, kd_processor]
+    const data = [processor, seri_processor, kecepatan_processor, id]
     try {
         const [rows, fields] = await promisePool.query(statment, data)
         if (rows.err) throw rows.err
