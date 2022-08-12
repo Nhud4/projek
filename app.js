@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const router = require("./routes/product");
-const migration = require("./infastruktur/migration/migration");
+const migration = require("./aplikasi/laptop/infastruktur/migration/migration");
 
 const app = express();
 
