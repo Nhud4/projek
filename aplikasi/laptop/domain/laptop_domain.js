@@ -2,9 +2,12 @@ const {
     InternalServerError,
     UnprocessableEntityError,
     NotFoundError
-} = require('../helper/error')
-const mysql = require('mysql2')
-const laptopRepo = require('../infastruktur/repositories/laptop_repo')
+} = require('../../../helper/error')
+const laptopRepo = require('../../../infastruktur/repositories/laptop_repo')
+const bobotRepo = require('../../../infastruktur/repositories/bobot_repo')
+const Bobot = require('../rules/rules')
+
+const getBobot = new Bobot()
 
 const getList = async () => {
     const getList = await laptopRepo.getListLaptop()

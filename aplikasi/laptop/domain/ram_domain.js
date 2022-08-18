@@ -2,9 +2,8 @@ const {
     InternalServerError,
     UnprocessableEntityError,
     NotFoundError
-} = require('../helper/error')
-const mysql = require('mysql2')
-const ramRepo = require('../infastruktur/repositories/ram_repo')
+} = require('../../../helper/error')
+const ramRepo = require('../../../infastruktur/repositories/ram_repo')
 
 const getList = async () => {
     const getList = await ramRepo.getListRam()

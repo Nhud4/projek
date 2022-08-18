@@ -2,9 +2,8 @@ const {
     InternalServerError,
     UnprocessableEntityError,
     NotFoundError
-} = require('../helper/error')
-const mysql = require('mysql2')
-const vgaRepo = require('../infastruktur/repositories/vga_repo')
+} = require('../../../helper/error')
+const vgaRepo = require('../../../infastruktur/repositories/vga_repo')
 
 const getList = async () => {
     const getList = await vgaRepo.getListVga()

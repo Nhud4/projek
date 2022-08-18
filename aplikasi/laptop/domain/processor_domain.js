@@ -2,9 +2,8 @@ const {
     InternalServerError,
     UnprocessableEntityError,
     NotFoundError
-} = require('../helper/error')
-const mysql = require('mysql2')
-const processorRepo = require('../infastruktur/repositories/processor_repo')
+} = require('../../../elper/error')
+const processorRepo = require('../../../infastruktur/repositories/processor_repo')
 
 const getList = async () => {
     const getList = await processorRepo.getListProcessor()
