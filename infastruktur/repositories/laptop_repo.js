@@ -39,9 +39,9 @@ const getListLaptop = async () => {
         ON laptop.display_id = display.id
     WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
-        return wrapper.data(result.data)
+        return wrapper.data(result)
     } catch (err) {
         return wrapper.error(err.message)
     }

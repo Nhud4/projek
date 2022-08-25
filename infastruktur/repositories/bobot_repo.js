@@ -10,9 +10,9 @@ const wrapper = new Wrapper()
 const getListBobot = async () => {
     const statement = `SELECT * FROM bobot WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
-        return wrapper.data(result.data)
+        return wrapper.data(result)
     } catch (err) {
         return wrapper.error(err.message)
     }
