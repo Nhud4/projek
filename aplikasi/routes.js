@@ -15,7 +15,7 @@ const user = new User()
 
 const router = express.Router()
 
-router.post('/login', basicAuth.isAuthenticated, usrtAuth.login, user.login)
+router.post("/login", basicAuth.isAuthenticated, usrtAuth.login, user.login)
 router.post('/register', basicAuth.isAuthenticated, usrtAuth.register, user.register)
 
 router.get('/', (_req, res) => {
