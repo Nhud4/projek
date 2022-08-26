@@ -31,6 +31,19 @@ const migrationHp = async () => {
                 CONSTRAINT FK_kamera FOREIGN KEY(kamera_id) REFERENCES kamera(id) ON DELETE CASCADE
             )`)
             if (result.err) throw result.err
+
+            // result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_alternatif_hp(
+            //     id BIGSERIAL NOT NULL UNIQUE,
+            //     hp_id VARCHAR(50) NOT NULL,
+            //     c1 BIGINT NOT NULL,
+            //     c2 BIGINT NOT NULL,
+            //     c3 BIGINT NOT NULL,
+            //     created_at TIMESTAMP DEFAULT NOW(),
+            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     deleted_at TIMESTAMP NULL,
+            //     FOREIGN KEY(hp_id) REFERENCES hp(id) ON DELETE CASCADE
+            //     )`)
+            // if (result.err) throw result.err;
         }
     } catch (err) {
         console.log(err)

@@ -1,4 +1,4 @@
-const Wrapper = require('../helper/utils/wrapper')
+const Wrapper = require('../../../helper/utils/wrapper')
 const penyimpananDomain = require('../domain/penyimpanan_domain')
 
 const wrapper = new Wrapper()

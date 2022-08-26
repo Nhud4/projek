@@ -1,11 +1,12 @@
 const Wrapper = require('../../../helper/utils/wrapper')
-const laptopDomain = require('../domain/laptop_domain')
+const HpDomain = require('../domain/hp_domain')
 
 const wrapper = new Wrapper()
+const domain = new HpDomain()
 
-class LaptopController {
+class HpController {
     async getList(req, res) {
-        const getList = await laptopDomain.getList()
+        const getList = await domain.getList()
         if (getList instanceof Error) return wrapper.responseError(res, getList)
 
         const data = getList.data
@@ -17,13 +18,12 @@ class LaptopController {
         })
     }
 
-    async getById(req, res) {
+    async getbyId(req, res) {
         const paylaod = { ...req.params }
-        const getById = await laptopDomain.getByKd(paylaod)
+        const getById = await domain.getById(paylaod)
         if (getById instanceof Error) return wrapper.responseError(res, getById)
 
         const data = getById.data
-
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -32,10 +32,10 @@ class LaptopController {
         })
     }
 
-    async insertLaptop(req, res) {
+    async insertHp(req, res) {
         const paylaod = { ...req.body }
-        const insertLaptop = await laptopDomain.insertLaptop(paylaod)
-        if (insertLaptop instanceof Error) return wrapper.responseError(res, insertLaptop)
+        const insertHp = await domain.insertHp(paylaod)
+        if (insertHp instanceof Error) return wrapper.responseError(res, insertHp)
 
         return wrapper.response(res, 200, {
             message: 'berhasil menambahkan data',
@@ -45,24 +45,24 @@ class LaptopController {
         })
     }
 
-    async updatelaptop(req, res) {
+    async updateHp(req, res) {
         const paylaod = {
             ...req.params,
             ...req.body
         }
 
-        const updateLaptop = await laptopDomain.updateLaptop(paylaod)
-        if (updateLaptop instanceof Error) return wrapper.responseError(res, updateLaptop)
+        const updateHp = await domain.updateHp(paylaod)
+        if (updateHp instanceof Error) return wrapper.responseError(res, updateHp)
 
         const data = {
             id: paylaod.id,
-            merek_id: paylaod.merek_id,
-            laptop: paylaod.laptop,
-            processor_id: paylaod.processor_id,
+            brand_id: paylaod.brand_id,
+            hp: paylaod.hp,
+            chipset_id: paylaod.chipset_id,
+            internal_id: paylaod.internal_id,
             ram_id: paylaod.ram_id,
-            penyimpanan_id: paylaod.penyimpanan_id,
-            vga_id: paylaod.vga_id,
-            display_id: paylaod.display_id,
+            baterai_id: paylaod.baterai_id,
+            kamera_id: paylaod.kamera_id,
             harga: paylaod.harga
         }
 
@@ -74,10 +74,10 @@ class LaptopController {
         })
     }
 
-    async deleteLaptop(req, res) {
+    async deleteHp(req, res) {
         const paylaod = { ...req.params }
-        const deleteLaptop = await laptopDomain.deleteLaptop(paylaod)
-        if (deleteLaptop instanceof Error) return wrapper.responseError(res, deleteLaptop)
+        const deleteHp = await domain.deleteHp(paylaod)
+        if (deleteHp instanceof Error) return wrapper.responseError(res, deleteHp)
 
         return wrapper.response(res, 200, {
             message: 'berhasil menghapus data',
@@ -88,4 +88,4 @@ class LaptopController {
     }
 }
 
-module.exports = LaptopController
+module.exports = HpController

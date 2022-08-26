@@ -7,7 +7,7 @@ const laptopRepo = require('../../../infastruktur/repositories/laptop_repo')
 const bobotRepo = require('../../../infastruktur/repositories/bobot_repo')
 const Bobot = require('../rules/rules')
 
-const getBobot = new Bobot()
+const bobot = new Bobot()
 
 const getList = async () => {
     const getList = await laptopRepo.getListLaptop()

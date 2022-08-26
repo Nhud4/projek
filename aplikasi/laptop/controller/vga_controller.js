@@ -1,4 +1,4 @@
-const Wrapper = require('../helper/utils/wrapper')
+const Wrapper = require('../../../helper/utils/wrapper')
 const vgaDomain = require('../domain/vga_domain')
 
 const wrapper = new Wrapper()
