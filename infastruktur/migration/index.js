@@ -6,11 +6,12 @@ const vga = require('./laptop/vga')
 const display = require('./laptop/display')
 const laptop = require('./laptop/laptop')
 const bobot = require('./laptop/bobot')
-
+const user = require('./user')
 const spesifikasi = require('./handphone/spesifikasi')
 const handphone = require('./handphone/handphone')
 
 const init = async () => {
+    await user()
     await merk()
     await processor()
     await ram()
