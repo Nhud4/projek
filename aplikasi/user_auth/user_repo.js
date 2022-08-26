@@ -9,7 +9,7 @@ const wrapper = new Wrapper()
 
 class UserAuth {
     async getList() {
-        const statement = `SELECT * FROM user WHERE deleted_at IS NULL`
+        const statement = `SELECT * FROM admin WHERE deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
@@ -20,7 +20,7 @@ class UserAuth {
     }
 
     async getById(id) {
-        const statement = `SELECT * FROM user WHERE id=$1 AND deleted_at IS NULL`
+        const statement = `SELECT * FROM admin WHERE id=$1 AND deleted_at IS NULL`
         const data = [id]
         try {
             const result = await db.query(statement, data)
@@ -32,7 +32,7 @@ class UserAuth {
     }
 
     async getByUsername(username) {
-        const statement = `SELECT * FROM user WHERE username=$1 AND deleted_at IS NULL`
+        const statement = `SELECT * FROM admin WHERE username=$1 AND deleted_at IS NULL`
         const data = [username]
         try {
             const result = await db.query(statement, data)
@@ -44,7 +44,7 @@ class UserAuth {
     }
 
     async getByPhone(phone) {
-        const statement = `SELECT * FROM user WHERE phone=$1 AND deleted_at IS NULL`
+        const statement = `SELECT * FROM admin WHERE phone=$1 AND deleted_at IS NULL`
         const data = [phone]
         try {
             const result = await db.query(statement, data)
@@ -56,7 +56,7 @@ class UserAuth {
     }
 
     async getByName(name) {
-        const statement = `SELECT * FROM user WERE name=$1 AND deleted_at IS NULL`
+        const statement = `SELECT * FROM admin WHERE name =$1 AND deleted_at IS NULL`
         const data = [name]
         try {
             const result = await db.query(statement, data)
@@ -67,10 +67,10 @@ class UserAuth {
         }
     }
 
-    async insertUser(name, phone, address, username, password, user_extent) {
-        const statement = `INSERT INTO user(name, phone, address, username, password, user_extent)
-        VALUES($1, $2, $3, $4, $5, $6)`
-        const data = [name, phone, address, username, password, user_extent]
+    async insertUser(name, phone, username, password, user_extent) {
+        const statement = `INSERT INTO admin(name, phone, username, password, user_extent)
+        VALUES($1, $2, $3, $4, $5)`
+        const data = [name, phone, username, password, user_extent]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
@@ -80,7 +80,7 @@ class UserAuth {
         }
     }
 
-    async updateUser(name, phone, address, username, password, user_extent, id) {
+    async updateUser(name, phone, username, password, user_extent, id) {
         const statement = `UPDATE user SET
         name=$1,
         phone=$2,
@@ -89,7 +89,7 @@ class UserAuth {
         password=$5,
         user_extent=$6
         WHERE id=$7 AND deleted_at IS NULL`
-        const data = [name, phone, address, username, password, user_extent, id]
+        const data = [name, phone, username, password, user_extent, id]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
