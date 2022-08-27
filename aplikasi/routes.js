@@ -65,6 +65,18 @@ router.get('/get/display/by/:id=?', bearerAuth.isAuthenticated, display.getById)
 router.put('/update/display/:id=?', bearerAuth.isAuthenticated, display.updateDisplay)
 router.delete('/delete/display/:id=?', bearerAuth.isAuthenticated, display.deleteDisplay)
 
+router.get('/get/laptop', bearerAuth.isAuthenticated, laptop.getList)
+router.post('/add/laptop', bearerAuth.isAuthenticated, laptop.insertLaptop)
+router.get('/get/laptop/by/:id=?', bearerAuth.isAuthenticated, laptop.getById)
+router.put('/update/laptop/:id=?', bearerAuth.isAuthenticated, laptop.updatelaptop)
+router.delete('/delete/laptop/:id=?', bearerAuth.isAuthenticated, laptop.deleteLaptop)
+
+router.get('/get/bobot', bearerAuth.isAuthenticated, bobot.getList)
+router.post('/add/bobot', bearerAuth.isAuthenticated, bobot.insertBobot)
+router.get('/get/bobot/by/:id=?', bearerAuth.isAuthenticated, bobot.getById)
+router.put('/update/bobot/:id=?', bearerAuth.isAuthenticated, bobot.updateBobot)
+router.delete('/delete/bobot/:id=?', bearerAuth.isAuthenticated, bobot.deleteBobot)
+
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {
         message: `${packageJson.name} server is running properly`,

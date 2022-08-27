@@ -5,9 +5,11 @@ const {
 } = require('../../../helper/error')
 const laptopRepo = require('../../../infastruktur/repositories/laptop_repo')
 const bobotRepo = require('../../../infastruktur/repositories/bobot_repo')
-const Bobot = require('../rules/rules')
+const Rules = require('../rules/rules')
+const Alternatif = require('../../../infastruktur/repositories/bobot_alternatif_repo')
 
-const bobot = new Bobot()
+const rules = new Rules()
+const alternatif = new Alternatif()
 
 const getList = async () => {
     const getList = await laptopRepo.getListLaptop()
@@ -31,7 +33,7 @@ const getByKd = async (payload) => {
 
 const insertLaptop = async (payload) => {
     const {
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -52,7 +54,7 @@ const insertLaptop = async (payload) => {
     }
 
     const insertLaptop = await laptopRepo.insertLaptop(
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -63,6 +65,43 @@ const insertLaptop = async (payload) => {
     if (insertLaptop.err) {
         return new InternalServerError('gagal menambahkan data laptop')
     }
+
+    const laptopId = insertLaptop.data[0].id
+
+    const getData = await laptopRepo.getById(laptopId)
+
+    let processor = getData.data[0].processor
+    let ram = getData.data[0].kapasitas_ram
+    let penyimpanan = getData.data[0].kapasitas_penyimpanan
+    let vga = getData.data[0].kapasitas_vga
+    let display = getData.data[0].ukuran_display
+    const setKategori = await rules.kategori(processor)
+
+    const bobotProcessor = await rules.bobotProcessor(processor)
+    const bobotRam = await rules.bobotRam(ram)
+    const bobotPenyimpanan = await rules.bobotPenyimpanan(penyimpanan)
+    const bobotVga = await rules.bobotVga(vga)
+    const bobotDisplay = await rules.bobotDisplay(display)
+    const ka = setKategori.ka
+    const kb = setKategori.kb
+    const kc = setKategori.kc
+
+    const insertAlternatif = await alternatif.insertAlternatif(
+        laptopId,
+        bobotProcessor,
+        bobotRam,
+        bobotPenyimpanan,
+        bobotVga,
+        bobotDisplay,
+        harga,
+        ka,
+        kb,
+        kc
+    )
+    if (insertAlternatif.err) {
+        return new InternalServerError('fail to add alternatif')
+    }
+
     return insertLaptop
 }
 
@@ -73,19 +112,24 @@ const deleteLaptop = async (payload) => {
         return new InternalServerError('gagal mendapatkan data')
     }
     if (getById.data.length === 0) {
-        return new NotFoundError('data telah ada')
+        return new NotFoundError('data tidak ditemukan')
     }
 
     const deleteLaptop = await laptopRepo.deleteLaptop(id)
     if (deleteLaptop.err) {
         return new InternalServerError('gagal menghapus data laptop')
     }
+
+    const deleteAlternatif = await alternatif.deleteAlternatif(id)
+    if (deleteAlternatif.err) {
+        return new InternalServerError('gagal menghapus data alternatif')
+    }
     return deleteLaptop
 }
 
 const updateLaptop = async (payload) => {
     const {
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -95,6 +139,7 @@ const updateLaptop = async (payload) => {
         harga,
         id
     } = payload
+
     const getById = await laptopRepo.getById(id)
     if (getById.err) {
         return new InternalServerError('gagal mendapatkan data')
@@ -107,7 +152,7 @@ const updateLaptop = async (payload) => {
     if (getByLaptop.err) {
         return new InternalServerError('gagal mendapatakan data')
     }
-    if (getByLaptop.data.length > 0) {
+    if (getByLaptop.data.laptop !== getById.data.laptop) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             filed: 'laptop',
             message: 'data telah ada'
@@ -115,7 +160,7 @@ const updateLaptop = async (payload) => {
     }
 
     const updateLaptop = await laptopRepo.updateLaptop(
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -127,6 +172,40 @@ const updateLaptop = async (payload) => {
     )
     if (updateLaptop.err) {
         return new InternalServerError('gagal menrubah data laptop')
+    }
+
+    const getData = await laptopRepo.getById(id)
+
+    const processor = getData.data[0].processor
+    const ram = getData.data[0].kapasitas_ram
+    const penyimpanan = getData.data[0].kapasitas_penyimpanan
+    const vga = getData.data[0].kapasitas_vga
+    const display = getData.data[0].ukuran_display
+    const setKategori = await rules.kategori(processor)
+
+    const bobotProcessor = await rules.bobotProcessor(processor)
+    const bobotRam = await rules.bobotRam(ram)
+    const bobotPenyimpanan = await rules.bobotPenyimpanan(penyimpanan)
+    const bobotVga = await rules.bobotVga(vga)
+    const bobotDisplay = await rules.bobotDisplay(display)
+    const ka = setKategori.ka
+    const kb = setKategori.kb
+    const kc = setKategori.kc
+
+    const updateAlternatif = await alternatif.updateAlternatif(
+        bobotProcessor,
+        bobotRam,
+        bobotPenyimpanan,
+        bobotVga,
+        bobotDisplay,
+        harga,
+        ka,
+        kb,
+        kc,
+        id
+    )
+    if (updateAlternatif.err) {
+        return new InternalServerError('fail to add alternatif')
     }
     return updateLaptop
 }

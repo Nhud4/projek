@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListLaptop = async () => {
     const statement = `SELECT
     laptop.id, 
-    merek.merek,
+    merk.merk,
     laptop.laptop, 
     processor.processor,
     processor.seri_processor,
@@ -19,14 +19,14 @@ const getListLaptop = async () => {
     ram.kapasitas_ram,
     penyimpanan.type_penyimpanan,
     penyimpanan.kapasitas_penyimpanan,
-    vga.merek_vga,
+    vga.merk_vga,
     vga.kapasitas_vga,
     display.type_display,
-    display.ukuran_dispaly, 
+    display.ukuran_display, 
     laptop.harga
         FROM laptop 
-        INNER JOIN merek
-        ON laptop.merek_id = merek.id
+        INNER JOIN merk
+        ON laptop.merk_id = merk.id
         INNER JOIN processor
         ON laptop.processor_id = processor.id
         INNER JOIN ram
@@ -37,11 +37,11 @@ const getListLaptop = async () => {
         ON laptop.vga_id = vga.id
         INNER JOIN display
         ON laptop.display_id = display.id
-    WHERE deleted_at IS NULL`
+    WHERE laptop.deleted_at IS NULL`
     try {
         const result = await db.query(statement)
         if (result.err) throw result.err
-        return wrapper.data(result)
+        return wrapper.data(result.data)
     } catch (err) {
         return wrapper.error(err.message)
     }
@@ -50,7 +50,7 @@ const getListLaptop = async () => {
 const getById = async (id) => {
     const statement = `SELECT
     laptop.id, 
-    merek.merek,
+    merk.merk,
     laptop.laptop, 
     processor.processor,
     processor.seri_processor,
@@ -59,25 +59,26 @@ const getById = async (id) => {
     ram.kapasitas_ram,
     penyimpanan.type_penyimpanan,
     penyimpanan.kapasitas_penyimpanan,
-    vga.merek_vga,
+    vga.merk_vga,
     vga.kapasitas_vga,
     display.type_display,
-    display.ukuran_dispaly, 
+    display.ukuran_display, 
     laptop.harga
         FROM laptop 
-        INNER JOIN merek
-        ON laptop.merek_id = merek.id
+        INNER JOIN merk
+        ON laptop.merk_id = merk.id
         INNER JOIN processor
         ON laptop.processor_id = processor.id
         INNER JOIN ram
-        ON laptop.ram_id = ram.id_ram
+        ON laptop.ram_id = ram.id
         INNER JOIN penyimpanan
         ON laptop.penyimpanan_id = penyimpanan.id
         INNER JOIN vga
         ON laptop.vga_id = vga.id
         INNER JOIN display
         ON laptop.display_id = display.id
-    WHERE laptop.id=$1 AND deleted_at IS NULL`
+    WHERE laptop.id=$1
+    AND laptop.deleted_at IS NULL`
     const data = [id]
     try {
         const result = await db.query(statement, data)
@@ -101,7 +102,7 @@ const getByLaptop = async (laptop) => {
 }
 
 const insertLaptop = async (
-    merek_id,
+    merk_id,
     laptop,
     processor_id,
     ram_id,
@@ -110,7 +111,7 @@ const insertLaptop = async (
     display_id,
     harga) => {
     const statement = `INSERT INTO laptop(
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -118,10 +119,10 @@ const insertLaptop = async (
         vga_id,
         display_id,
         harga
-    )VALUES($1, $2. $3. $4, $5, $6, $7, $8)
+    )VALUES($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING id`
     const data = [
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -154,7 +155,7 @@ const deleteLaptop = async (id) => {
 }
 
 const updateLaptop = async (
-    merek_id,
+    merk_id,
     laptop,
     processor_id,
     ram_id,
@@ -164,7 +165,7 @@ const updateLaptop = async (
     harga,
     id) => {
     const statement = `UPDATE laptop SET
-    merek_id =$1,
+    merk_id =$1,
     laptop =$2,
     processor_id =$3,
     ram_id =$4,
@@ -175,7 +176,7 @@ const updateLaptop = async (
     WHERE id =$9
     AND deleted_at IS NULL`
     const data = [
-        merek_id,
+        merk_id,
         laptop,
         processor_id,
         ram_id,
@@ -187,6 +188,7 @@ const updateLaptop = async (
     ]
     try {
         const result = await db.query(statement, data)
+        console.log(result)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {

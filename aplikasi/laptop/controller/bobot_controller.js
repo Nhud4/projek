@@ -28,7 +28,63 @@ const getById = async (req, res) => {
     })
 }
 
+const insertBobot = async (req, res) => {
+    const payload = { ...req.body }
+    const insertBobot = await bobotDomain.insertBobot(payload)
+    if (insertBobot instanceof Error) return wrapper.responseError(res, insertBobot)
+
+    return wrapper.response(res, 200, {
+        message: 'berhasil mendapatkan data',
+        code: 200,
+        data: { ...payload },
+        success: true
+    })
+}
+
+const updateBobot = async (req, res) => {
+    const payload = {
+        ...req.params,
+        ...req.body
+    }
+
+    const updateBobot = await bobotDomain.updateBobot(payload)
+    if (updateBobot instanceof Error) return wrapper.responseError(res, updateBobot)
+
+    const data = {
+        id: payload.id,
+        bobot: payload.bobot,
+        processor: payload.processor,
+        ram: payload.ram,
+        penyimpanan: payload.penyimpanan,
+        vga: payload.vga,
+        display: payload.display,
+        harga: payload.harga
+    }
+    return wrapper.response(res, 200, {
+        message: 'berhasil mendapatkan data',
+        code: 200,
+        data,
+        success: true
+    })
+}
+
+const deleteBobot = async (req, res) => {
+    const payload = { ...req.params }
+    const deleteBobot = await bobotDomain.deleteBobot(payload)
+    if (deleteBobot instanceof Error) return wrapper.responseError(res, deleteBobot)
+
+    return wrapper.response(res, 200, {
+        message: 'berhasil mendapatkan data',
+        code: 200,
+        data: { id: payload.id },
+        success: true
+    })
+}
+
 module.exports = {
     getList,
-    getById
+    getById,
+    insertBobot,
+    updateBobot,
+    deleteBobot
 }

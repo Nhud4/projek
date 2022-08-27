@@ -32,11 +32,22 @@ const migrationHp = async () => {
             )`)
             if (result.err) throw result.err
 
+            // result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_hp(
+            //     id BIGSERIAL NOT NULL UNIQUE,
+            //     c1 BIGINT NOT NULL,
+            //     c2 BIGINT NOT NULL,
+            //     c3 BIGINT NOT NULL,
+            //     created_at TIMESTAMP DEFAULT NOW(),
+            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     deleted_at TIMESTAMP NULL
+            //     )`)
+            // if (result.err) throw result.err;
+
             // result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_alternatif_hp(
             //     id BIGSERIAL NOT NULL UNIQUE,
             //     hp_id VARCHAR(50) NOT NULL,
-            //     c1 BIGINT NOT NULL,
-            //     c2 BIGINT NOT NULL,
+            //     jumlah_barang BIGINT NOT NULL,
+            //     jumlah BIGINT NOT NULL,
             //     c3 BIGINT NOT NULL,
             //     created_at TIMESTAMP DEFAULT NOW(),
             //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
