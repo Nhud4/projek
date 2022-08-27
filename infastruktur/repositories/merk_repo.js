@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListMerk = async () => {
     const statement = `SELECT * FROM merk WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {
@@ -45,10 +45,11 @@ const getByMerk = async (merk) => {
 }
 
 const insertMerk = async (merk) => {
-    const statement = `INSERT INTO merk SET merk =$1`
+    const statement = `INSERT INTO merk(merk) VALUES($1)`
     const data = [merk]
     try {
         const result = await db.query(statement, data)
+        console.log(result)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {

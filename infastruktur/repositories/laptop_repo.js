@@ -77,7 +77,7 @@ const getById = async (id) => {
         ON laptop.vga_id = vga.id
         INNER JOIN display
         ON laptop.display_id = display.id
-    WHERE deleted_at IS NULL`
+    WHERE laptop.id=$1 AND deleted_at IS NULL`
     const data = [id]
     try {
         const result = await db.query(statement, data)
@@ -118,7 +118,8 @@ const insertLaptop = async (
         vga_id,
         display_id,
         harga
-    )VALUES($1, $2. $3. $4, $5, $6, $7, $8)`
+    )VALUES($1, $2. $3. $4, $5, $6, $7, $8)
+    RETURNING id`
     const data = [
         merek_id,
         laptop,

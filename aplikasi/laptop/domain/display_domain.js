@@ -27,12 +27,14 @@ const getByKd = async (payload) => {
 
 const InsertDisplay = async (payload) => {
     const { type_display, ukuran_display } = payload
+
     const getByType = await displayRepo.getByType(type_display)
-    const getByKapasitas = await displayRepo.getByKapasitas(ukuran_display)
+    const getByKapasitas = await displayRepo.getByUkuran(ukuran_display)
+
     if (getByType.err && getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'
@@ -64,16 +66,18 @@ const deleteDisplay = async (payload) => {
 
 const updateDisplay = async (payload) => {
     const { type_display, ukuran_display, id } = payload
+
     const getByKd = await displayRepo.getByKd(id)
-    const getByKapasitas = await displayRepo.getByKapasitas(ukuran_display)
+    const getByKapasitas = await displayRepo.getByUkuran(ukuran_display)
     const getByType = await displayRepo.getByType(type_display)
+
     if (getByKd.err || getByType.err || getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
     if (getByKd.data.length === 0) {
         return new NotFoundError('data tidak ditemukan')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapay memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'

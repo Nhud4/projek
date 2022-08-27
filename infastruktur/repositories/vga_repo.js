@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListVga = async () => {
     const statement = `SELECT * FROM vga WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {
@@ -60,11 +60,9 @@ const getByKapasitas = async (kapasitas_vga) => {
     }
 }
 
-const InsertVga = async (merek_vga, kapasitas_vga) => {
-    const statement = `INSERT INTO vga(
-        merek_vga, kapasitas_vga
-    ) VALUES($1, $2)`
-    const data = [merek_vga, kapasitas_vga]
+const InsertVga = async (merk_vga, kapasitas_vga) => {
+    const statement = `INSERT INTO vga(merk_vga, kapasitas_vga) VALUES($1, $2)`
+    const data = [merk_vga, kapasitas_vga]
     try {
         const result = await db.query(statement, data)
         if (result.err) throw result.err
@@ -89,10 +87,10 @@ const deleteVga = async (id) => {
 }
 
 const updateVga = async (merk_vga, kapasitas_vga, id) => {
-    const statement = `UPDATE ram SET
+    const statement = `UPDATE vga SET
     merk_vga=$1,
     kapasitas_vga=$2
-    WHERE id=%3
+    WHERE id=$3
     AND deleted_at IS NULL`
     const data = [merk_vga, kapasitas_vga, id]
     try {

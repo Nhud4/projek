@@ -27,12 +27,14 @@ const getByKd = async (payload) => {
 
 const insertPenyimpanan = async (payload) => {
     const { type_penyimpanan, kapasitas_penyimpanan } = payload
-    const getByType = await penyimpananRepo.getByType(type_ram)
-    const getByKapasitas = await penyimpananRepo.getByKapasitas(kapasitas_ram)
+
+    const getByType = await penyimpananRepo.getByType(type_penyimpanan)
+    const getByKapasitas = await penyimpananRepo.getByKapasitas(kapasitas_penyimpanan)
+
     if (getByType.err && getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'
@@ -64,16 +66,18 @@ const deletePenyimpanan = async (payload) => {
 
 const updatePenyimpanan = async (payload) => {
     const { type_penyimpanan, kapasitas_penyimpanan, id } = payload
+
     const getByKd = await penyimpananRepo.getByKd(id)
-    const getByKapasitas = await penyimpananRepo.getByKapasitas(kapasitas_ram)
-    const getByType = await penyimpananRepo.getByType(type_ram)
+    const getByKapasitas = await penyimpananRepo.getByKapasitas(type_penyimpanan)
+    const getByType = await penyimpananRepo.getByType(type_penyimpanan)
+
     if (getByKd.err || getByType.err || getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
     if (getByKd.data.length === 0) {
         return new NotFoundError('data tidak ditemukan')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapay memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'

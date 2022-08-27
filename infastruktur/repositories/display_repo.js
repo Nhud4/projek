@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListDisplay = async () => {
     const statement = `SELECT * FROM display WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {
@@ -88,7 +88,7 @@ const deleteDisplay = async (id) => {
 }
 
 const updateDisplay = async (type_display, ukuran_display, id) => {
-    const statement = `UPDATE ram SET
+    const statement = `UPDATE display SET
     type_display=$1,
     ukuran_display=$2
     WHERE id=$3

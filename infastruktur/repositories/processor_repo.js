@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListProcessor = async () => {
     const statement = `SELECT * FROM processor WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {
@@ -93,7 +93,7 @@ const updateProcessor = async (processor, seri_processor, kecepatan_processor, i
     processor=$1,
     seri_processor=$2,
     kecepatan_processor=$3
-    WHERE kd_ram=$4
+    WHERE id=$4
     AND deleted_at IS NULL`
     const data = [processor, seri_processor, kecepatan_processor, id]
     try {

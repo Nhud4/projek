@@ -26,20 +26,22 @@ const getByKd = async (payload) => {
 }
 
 const insertVga = async (payload) => {
-    const { merek_vga, kapasitas_vga } = payload
-    const getByType = await vgaRepo.getByType(merek_vga)
+    const { merk_vga, kapasitas_vga } = payload
+
+    const getByType = await vgaRepo.getByMerk(merk_vga)
     const getByKapasitas = await vgaRepo.getByKapasitas(kapasitas_vga)
+
     if (getByType.err && getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'
         }])
     }
 
-    const insertVga = await vgaRepo.insertVga(merek_vga, kapasitas_vga)
+    const insertVga = await vgaRepo.InsertVga(merk_vga, kapasitas_vga)
     if (insertVga.err) {
         return new InternalServerError('gagal menambahkan data')
     }
@@ -63,24 +65,26 @@ const deleteVga = async (payload) => {
 }
 
 const updateVga = async (payload) => {
-    const { merek_vga, kapasitas_vga, id } = payload
+    const { merk_vga, kapasitas_vga, id } = payload
+
     const getByKd = await vgaRepo.getByKd(id)
     const getByKapasitas = await vgaRepo.getByKapasitas(kapasitas_vga)
-    const getByType = await vgaRepo.getByType(merek_vga)
+    const getByType = await vgaRepo.getByMerk(merk_vga)
+
     if (getByKd.err || getByType.err || getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
     if (getByKd.data.length === 0) {
         return new NotFoundError('data tidak ditemukan')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByType.data.length > 0 && getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapay memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'
         }])
     }
 
-    const updateVga = await vgaRepo.updateVga(merek_vga, kapasitas_vga, id)
+    const updateVga = await vgaRepo.updateVga(merk_vga, kapasitas_vga, id)
     if (updateVga.err) {
         return new InternalServerError('gagal merubah data ram')
     }

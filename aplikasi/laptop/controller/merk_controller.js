@@ -8,7 +8,7 @@ const getList = async (req, res) => {
     if (getList instanceof Error) return wrapper.responseError(res, getList)
     const data = getList.data.map(item => {
         return {
-            id: item.kd_merk,
+            id: item.id,
             merk: item.merk
         }
     })
@@ -58,7 +58,7 @@ const deleteMerk = async (req, res) => {
     if (deleteMerk instanceof Error) return wrapper.responseError(res, deleteMerk)
 
     return wrapper.response(res, 200, {
-        message: 'success to delete driver',
+        message: 'success to delete data',
         code: 200,
         data: { id: payload.id },
         success: true
@@ -77,7 +77,7 @@ const updateMerk = async (req, res) => {
         merk: payload.merk
     }
     return wrapper.response(res, 200, {
-        message: 'success to update driver',
+        message: 'success to update data',
         code: 200,
         data,
         success: true

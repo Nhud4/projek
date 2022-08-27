@@ -27,12 +27,12 @@ const getByKd = async (payload) => {
 
 const insertRam = async (payload) => {
     const { type_ram, kapasitas_ram } = payload
-    const getByType = await ramRepo.getByType(type_ram)
+
     const getByKapasitas = await ramRepo.getByKapasitas(kapasitas_ram)
-    if (getByType.err && getByKapasitas.err) {
+    if (getByKapasitas.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+    if (getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             filed: 'type dan kapasitas',
             message: 'data telah ada'
@@ -73,9 +73,10 @@ const updateRam = async (payload) => {
     if (getByKd.data.length === 0) {
         return new NotFoundError('data tidak ditemukan')
     }
-    if (getByType.data.length > 0 || getByKapasitas.data.length > 0) {
+
+    if (getByKapasitas.data.length > 0) {
         return new UnprocessableEntityError('tidak dapay memproses', [{
-            filed: 'type dan kapasitas',
+            filed: 'kapasitas',
             message: 'data telah ada'
         }])
     }

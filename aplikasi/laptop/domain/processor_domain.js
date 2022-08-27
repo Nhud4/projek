@@ -2,7 +2,7 @@ const {
     InternalServerError,
     UnprocessableEntityError,
     NotFoundError
-} = require('../../../elper/error')
+} = require('../../../helper/error')
 const processorRepo = require('../../../infastruktur/repositories/processor_repo')
 
 const getList = async () => {
@@ -32,14 +32,9 @@ const insertProcessor = async (payload) => {
         return new InternalServerError('gagal mendapatkan data')
     }
 
-    const getByKecepatan = await processorRepo.getByKecepatan(kecepatan_processor)
-    if (getByKecepatan.err) {
-        return new InternalServerError('gagal mendapatkan data')
-    }
-
-    if (getBySeri.data.length > 0 && getByKecepatan.data.length > 0) {
+    if (getBySeri.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
-            filed: 'seri dan kecepatan',
+            filed: 'seri',
             message: 'data telah ada'
         }])
     }
@@ -82,13 +77,9 @@ const updateProcessor = async (payload) => {
     if (getBySeri.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    const getByKecepatan = await processorRepo.getByKecepatan(kecepatan_processor)
-    if (getByKecepatan.err) {
-        return new InternalServerError('gagal mendapatkan data')
-    }
-    if (getBySeri.data.length > 0 && getByKecepatan.data.length > 0) {
+    if (getBySeri.data.length > 0) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
-            filed: 'seri dan kecepatan',
+            filed: 'seri',
             message: 'data telah ada'
         }])
     }

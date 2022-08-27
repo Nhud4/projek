@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListPenyimpanan = async () => {
     const statement = `SELECT * FROM penyimpanan WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {
@@ -19,7 +19,7 @@ const getListPenyimpanan = async () => {
 }
 
 const getByKd = async (id) => {
-    const statement = `SELECT * FROM penyimoanan
+    const statement = `SELECT * FROM penyimpanan
     WHERE id =$1 AND deleted_at IS NULL`
     const data = [id]
     try {
@@ -47,7 +47,7 @@ const getByType = async (type_penyimpanan) => {
 
 const getByKapasitas = async (kapasitas_penyimpanan) => {
     const statement = `SELECT * FROM penyimpanan
-    WHEREkapasitas_penyimpanan=$1
+    WHERE kapasitas_penyimpanan=$1
     AND deleted_at IS NULL`
     const data = [kapasitas_penyimpanan]
     try {
@@ -60,9 +60,8 @@ const getByKapasitas = async (kapasitas_penyimpanan) => {
 }
 
 const insertPenyimpanan = async (type_penyimpanan, kapasitas_penyimpanan) => {
-    const statement = `INSERT INTO penyimpanan(
-        type_penyimpanan, kapasitas_penyimpanan
-    )VALUES($1, $2)`
+    const statement = `INSERT INTO penyimpanan(type_penyimpanan, kapasitas_penyimpanan)
+    VALUES($1, $2)`
     const data = [type_penyimpanan, kapasitas_penyimpanan]
     try {
         const result = await db.query(statement, data)

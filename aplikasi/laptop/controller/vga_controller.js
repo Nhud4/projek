@@ -10,7 +10,7 @@ const getList = async (req, res) => {
     const data = getList.data.map(item => {
         return {
             id: item.id,
-            merek: item.merek_vga,
+            merk: item.merk_vga,
             kapasitas: item.kapasitas_vga
         }
     })
@@ -29,7 +29,7 @@ const getById = async (req, res) => {
 
     const data = getById.data.map(item => {
         return {
-            merek: item.merek_vga,
+            merk: item.merk_vga,
             kapasitas: item.kapasitas_vga
         }
     })
@@ -77,7 +77,7 @@ const updateVga = async (req, res) => {
 
     const data = {
         id: payload.id,
-        merek_vga: payload.merek_vga,
+        merk_vga: payload.merk_vga,
         kapasitas_vga: payload.kapasitas_vga
     }
 

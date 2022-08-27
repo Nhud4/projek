@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 const getListRam = async () => {
     const statement = `SELECT * FROM ram WHERE deleted_at IS NULL`
     try {
-        const result = await db.query(statement, data)
+        const result = await db.query(statement)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {

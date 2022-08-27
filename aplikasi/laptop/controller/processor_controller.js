@@ -61,7 +61,7 @@ const deleteProcessor = async (req, res) => {
     if (deleteProcessor instanceof Error) return wrapper.responseError(res, deleteProcessor)
 
     return wrapper.response(res, 200, {
-        message: 'success to delete driver',
+        message: 'success to delete data',
         code: 200,
         data: { id: payload.id },
         success: true
@@ -84,7 +84,7 @@ const updateProcessor = async (req, res) => {
     }
 
     return wrapper.response(res, 200, {
-        message: 'success to update driver',
+        message: 'success to update data',
         code: 200,
         data,
         success: true

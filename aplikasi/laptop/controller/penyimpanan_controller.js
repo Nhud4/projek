@@ -60,7 +60,7 @@ const deletePenyimpanan = async (req, res) => {
     if (deletePenyimpanan instanceof Error) return wrapper.responseError(res, deletePenyimpanan)
 
     return wrapper.response(res, 200, {
-        message: 'success to delete driver',
+        message: 'success to delete data',
         code: 200,
         data: { id: payload.id },
         success: true
@@ -82,7 +82,7 @@ const updatePenyimpanan = async (req, res) => {
     }
 
     return wrapper.response(res, 200, {
-        message: 'success to update driver',
+        message: 'success to update data',
         code: 200,
         data,
         success: true
