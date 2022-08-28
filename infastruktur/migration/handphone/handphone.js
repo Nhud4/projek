@@ -11,7 +11,7 @@ const migrationHp = async () => {
     try {
         if (db) {
             let result = await db.query(`CREATE TABLE IF NOT EXISTS hp(
-                id BIGSERIAL NOT NULL,
+                id BIGSERIAL NOT NULL UNIQUE,
                 brand_id BIGINT NOT NULL,
                 hp VARCHAR(100) NOT NULL,
                 chipset_id BIGINT NOT NULL,
@@ -32,29 +32,33 @@ const migrationHp = async () => {
             )`)
             if (result.err) throw result.err
 
-            // result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_hp(
-            //     id BIGSERIAL NOT NULL UNIQUE,
-            //     c1 BIGINT NOT NULL,
-            //     c2 BIGINT NOT NULL,
-            //     c3 BIGINT NOT NULL,
-            //     created_at TIMESTAMP DEFAULT NOW(),
-            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            //     deleted_at TIMESTAMP NULL
-            //     )`)
-            // if (result.err) throw result.err;
+            result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_hp(
+                id BIGSERIAL NOT NULL UNIQUE,
+                ram BIGINT NOT NULL,
+                internal BIGINT NOT NULL,
+                batrai BIGINT NOT NULL,
+                kamera BIGINT NOT NULL,
+                harga BIGINT NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                deleted_at TIMESTAMP NULL
+                )`)
+            if (result.err) throw result.err;
 
-            // result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_alternatif_hp(
-            //     id BIGSERIAL NOT NULL UNIQUE,
-            //     hp_id VARCHAR(50) NOT NULL,
-            //     jumlah_barang BIGINT NOT NULL,
-            //     jumlah BIGINT NOT NULL,
-            //     c3 BIGINT NOT NULL,
-            //     created_at TIMESTAMP DEFAULT NOW(),
-            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            //     deleted_at TIMESTAMP NULL,
-            //     FOREIGN KEY(hp_id) REFERENCES hp(id) ON DELETE CASCADE
-            //     )`)
-            // if (result.err) throw result.err;
+            result = await db.query(`CREATE TABLE IF NOT EXISTS bobot_alternatif_hp(
+                id BIGSERIAL NOT NULL UNIQUE,
+                hp_id BIGINT NOT NULL,
+                ram BIGINT NOT NULL,
+                internal BIGINT NOT NULL,
+                batrai BIGINT NOT NULL,
+                kamera BIGINT NOT NULL,
+                harga BIGINT NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                deleted_at TIMESTAMP NULL,
+                CONSTRAINT FK_hp_alternatif FOREIGN KEY(hp_id) REFERENCES hp(id) ON DELETE CASCADE
+                )`)
+            if (result.err) throw result.err;
         }
     } catch (err) {
         console.log(err)

@@ -54,7 +54,7 @@ class Bobot {
         if (ram < '2 Gb') {
             c2 = 1
         }
-        if (ram == '2 Gb') {
+        if (ram === '2 Gb') {
             c2 = 2
         }
         if (ram === '4 Gb') {

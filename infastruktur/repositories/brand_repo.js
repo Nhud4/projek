@@ -13,7 +13,7 @@ class Brand {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -44,7 +44,7 @@ class Brand {
     }
 
     async isertBarnd(brand) {
-        const statement = `INSER INTO brand(brand) VALUES($1)`
+        const statement = `INSERT INTO brand(brand) VALUES($1)`
         const data = [brand]
         try {
             const result = await db.query(statement, data)

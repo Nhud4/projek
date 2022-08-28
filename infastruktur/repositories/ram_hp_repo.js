@@ -13,7 +13,7 @@ class RamHp {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }

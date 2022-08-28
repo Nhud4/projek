@@ -78,6 +78,7 @@ class RamDomain {
 
     async deleteRam(paylaod) {
         const { id } = paylaod
+
         const getById = await ramModel.getById(id)
         if (getById.err) {
             return new InternalServerError('fail to get data')

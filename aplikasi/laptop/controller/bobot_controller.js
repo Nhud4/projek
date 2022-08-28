@@ -7,6 +7,8 @@ const getList = async (req, res) => {
     const getList = await bobotDomain.getList()
     if (getList instanceof Error) return wrapper.responseError(res, getList)
 
+    const data = getList.data[0]
+
     return wrapper.response(res, 200, {
         message: 'berhasil mendapatkan data',
         code: 200,
@@ -19,6 +21,8 @@ const getById = async (req, res) => {
     const payload = { ...req.params }
     const getById = await bobotDomain.getByBobot(payload)
     if (getById instanceof Error) return new wrapper.responseError(res, getById)
+
+    const data = getById.data[0]
 
     return wrapper.response(res, 200, {
         message: 'berhasil mendapatkan data',

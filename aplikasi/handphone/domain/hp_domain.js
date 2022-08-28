@@ -4,8 +4,11 @@ const {
     NotFoundError
 } = require('../../../helper/error')
 const HpModel = require('../../../infastruktur/repositories/hp_repo')
+const AlternatifRepo = require('../../../infastruktur/repositories/alternatif_hp_repo')
+const rules = require('../rules/rules')
 
 const hpModel = new HpModel()
+const alternatif = new AlternatifRepo()
 
 class HpDomain {
     async getList() {
@@ -63,6 +66,33 @@ class HpDomain {
         if (insertHp.err) {
             return new InternalServerError('fail to add data')
         }
+
+        const id = insertHp.data[0].id
+        const getById = await hpModel.getById(id)
+
+        const getRam = getById.data.ram
+        const getInternal = getById.data.internal
+        const getBartai = getById.data.bartai
+        const kamera_depan = getById.data.kamera_depan
+        const kamera_belakang = getById.data.kamera_belakang
+
+        const ram = await rules.bobotRam(getRam)
+        const internal = await rules.bobotInternal(getInternal)
+        const batrai = await rules.bobotBatrai(getBartai)
+        const kamera = await rules.bobotKamera(kamera_depan, kamera_belakang)
+
+        const insertAlternatif = await alternatif.insertAlternatifHp(
+            id,
+            ram,
+            internal,
+            batrai,
+            kamera,
+            harga
+        )
+        if (insertAlternatif.err) {
+            return new InternalServerError('fail to add alternatif')
+        }
+
         return insertHp
     }
 
@@ -111,6 +141,30 @@ class HpDomain {
         if (updateHp.err) {
             return new InternalServerError('fail to update data')
         }
+
+        const getRam = getById.data.ram
+        const getInternal = getById.data.internal
+        const getBartai = getById.data.bartai
+        const kamera_depan = getById.data.kamera_depan
+        const kamera_belakang = getById.data.kamera_belakang
+
+        const ram = await rules.bobotRam(getRam)
+        const internal = await rules.bobotInternal(getInternal)
+        const batrai = await rules.bobotBatrai(getBartai)
+        const kamera = await rules.bobotKamera(kamera_depan, kamera_belakang)
+
+        const updateAlternatif = await alternatif.updateAlternatif(
+            ram,
+            internal,
+            batrai,
+            kamera,
+            harga,
+            id
+        )
+        if (updateAlternatif.err) {
+            return new InternalServerError('fail to update alternatif')
+        }
+
         return updateHp
     }
 
@@ -128,6 +182,12 @@ class HpDomain {
         if (deleteHp.err) {
             return new InternalServerError('fail to delete data')
         }
+
+        const deleteAlternatif = await alternatif.deletedAlternatifHp(id)
+        if (deleteAlternatif.err) {
+            return new InternalServerError('fail to delete alternatif')
+        }
+
         return deleteHp
     }
 }

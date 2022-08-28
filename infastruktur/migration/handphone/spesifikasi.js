@@ -33,7 +33,8 @@ const migrationSpesifikasi = async () => {
             result = await db.query(`CREATE TABLE IF NOT EXISTS kamera(
                 id BIGSERIAL NOT NULL UNIQUE,
                 type VARCHAR(100) NOT NULL,
-                kualitas VARCHAR(50) NOT NULL,
+                kamera_depan VARCHAR(50) NOT NULL,
+                kamera_belakang VARCHAR(50) NOT NULL,
                 created_at TIMESTAMP DEFAULT NOW(),
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP NULL

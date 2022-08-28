@@ -27,6 +27,7 @@ class BatraiDomain {
 
     async insertBatrai(payload) {
         const { batrai } = payload
+
         const getByBatrai = await batraiModel.getByBatrai(batrai)
         if (getByBatrai.err) {
             return new InternalServerError('fail to get data')

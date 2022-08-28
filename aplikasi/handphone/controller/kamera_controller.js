@@ -9,7 +9,14 @@ class KameraRepo {
         const getList = await domain.getList()
         if (getList instanceof Error) return wrapper.responseError(res, getList)
 
-        const data = getList.data
+        const data = getList.data.map(item => {
+            return {
+                id: item.id,
+                type: item.type,
+                kamera_depan: item.kamera_depan,
+                kamera_belakang: item.kamera_belakang
+            }
+        })
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -23,7 +30,14 @@ class KameraRepo {
         const getById = await domain.getById(paylaod)
         if (getById instanceof Error) return wrapper.responseError(res, getById)
 
-        const data = getById.data
+        const data = getById.data.map(item => {
+            return {
+                id: item.id,
+                type: item.type,
+                kamera_depan: item.kamera_depan,
+                kamera_belakang: item.kamera_belakang
+            }
+        })
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -35,7 +49,7 @@ class KameraRepo {
     async insertKamera(req, res) {
         const paylaod = { ...req.body }
         const insertKamera = await domain.insertKamera(paylaod)
-        if (insertKamera instanceof Error) return wrapper.responseError(res, insertInternal)
+        if (insertKamera instanceof Error) return wrapper.responseError(res, insertKamera)
 
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
@@ -56,10 +70,11 @@ class KameraRepo {
         const data = {
             id: paylaod.id,
             type: paylaod.type,
-            kualitas: paylaod.kualitas
+            kamera_depan: paylaod.kamera_depan,
+            kamera_belakang: paylaod.kamera_belakang
         }
         return wrapper.response(res, 200, {
-            message: 'berhasil mendapatkan data',
+            message: 'berhasil merubah data',
             code: 200,
             data,
             success: true
@@ -72,7 +87,7 @@ class KameraRepo {
         if (deleteKamera instanceof Error) return wrapper.responseError(req, deleteInternal)
 
         return wrapper.response(res, 200, {
-            message: 'berhasil mendapatkan data',
+            message: 'berhasil menghapus data',
             code: 200,
             data: { id: paylaod.id },
             success: true

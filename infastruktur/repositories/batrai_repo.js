@@ -13,7 +13,7 @@ class Batrai {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -32,7 +32,7 @@ class Batrai {
     }
 
     async getByBatrai(batrai) {
-        const statement = `SELECT * FROM batrai WHERE bartai=$1 AND deleted_at IS NULL`
+        const statement = `SELECT * FROM batrai WHERE batrai=$1 AND deleted_at IS NULL`
         const data = [batrai]
         try {
             const result = await db.query(statement, data)
@@ -70,7 +70,7 @@ class Batrai {
 
     async deleteBatrai(id) {
         const statement = `UPDATE batrai SET deleted_at = NOW()
-        WHERE id=?`
+        WHERE id=$1`
         const data = [id]
         try {
             const result = await db.query(statement, data)

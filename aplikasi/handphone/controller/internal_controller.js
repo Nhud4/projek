@@ -9,7 +9,12 @@ class InternalControleer {
         const getList = await domain.getList()
         if (getList instanceof Error) return wrapper.responseError(res, getList)
 
-        const data = getList.data
+        const data = getList.data.map(item => {
+            return {
+                id: item.id,
+                internal: item.internal
+            }
+        })
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -23,7 +28,11 @@ class InternalControleer {
         const getById = await domain.getById(paylaod)
         if (getById instanceof Error) return wrapper.responseError(res, getById)
 
-        const data = getById.data
+        const data = getById.data.map(item => {
+            return {
+                internal: item.internal
+            }
+        })
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,

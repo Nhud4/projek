@@ -13,6 +13,7 @@ class KameraDomain {
         if (getList.err) {
             return new InternalServerError('fail to get data')
         }
+        return getList
     }
 
     async getById(paylaod) {
@@ -25,8 +26,8 @@ class KameraDomain {
     }
 
     async insertKamera(paylaod) {
-        const { type, kualitas } = paylaod
-        const getByKamera = await kameraModel.getByKamera(type, kualitas)
+        const { type, kamera_depan, kamera_belakang } = paylaod
+        const getByKamera = await kameraModel.getByKamera(type, kamera_depan, kamera_belakang)
         if (getByKamera.err) {
             return new IntersectionObserver('fail to get data')
         }
@@ -37,7 +38,7 @@ class KameraDomain {
             }])
         }
 
-        const insertKamera = await kameraModel.insertKamera(type, kualitas)
+        const insertKamera = await kameraModel.insertKamera(type, kamera_depan, kamera_belakang)
         if (insertKamera.err) {
             return new InternalServerError('fail to add data')
         }
@@ -45,7 +46,7 @@ class KameraDomain {
     }
 
     async updateKamera(paylaod) {
-        const { type, kualitas, id } = paylaod
+        const { type, kamera_depan, kamera_belakang, id } = paylaod
         const getById = await kameraModel.getById(id)
         if (getById.err) {
             return new InternalServerError('fail to get data')
@@ -54,7 +55,7 @@ class KameraDomain {
             return new NotFoundError('data no found')
         }
 
-        const getByKamera = await kameraModel.getByKamera(type, kualitas)
+        const getByKamera = await kameraModel.getByKamera(type, kamera_depan, kamera_belakang)
         if (getByKamera.err) {
             return new IntersectionObserver('fail to get data')
         }
@@ -65,7 +66,7 @@ class KameraDomain {
             }])
         }
 
-        const updateKamera = await kameraModel.updateKamera(type, kualitas, id)
+        const updateKamera = await kameraModel.updateKamera(type, kamera_depan, kamera_belakang, id)
         if (updateKamera.err) {
             return new InternalServerError('fail to update data')
         }

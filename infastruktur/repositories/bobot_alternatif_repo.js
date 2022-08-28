@@ -36,7 +36,7 @@ class AlternatifRepo {
         }
     }
 
-    async getKategori(kategori, sub_kategori) {
+    async getKategoriGame(kategori, sub_kategori) {
         const statement = `SELECT
         merk.merk,
         laptop.laptop,
@@ -53,6 +53,66 @@ class AlternatifRepo {
         ON laptop.merk_id = merk.is
         INNER JOIN kategori
         ON bobot_alternatif.ka = kategori.id
+        WHERE kategori.kategoro = $1
+        AND kategori.sub_kategori = $2
+        AND bobot_alternatif.deleted_at IS NULL`
+        const data = [kategori, sub_kategori]
+        try {
+            const result = await db.query(statement, data)
+            if (result.err) throw result.err
+            return wrapper.data(result)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async getKategoriEditing(kategori, sub_kategori) {
+        const statement = `SELECT
+        merk.merk,
+        laptop.laptop,
+        bobot_alternatif.processor,
+        bobot_alternatif.ram,
+        bobot_alternatif.penyimpanan,
+        bobot_alternatif.vga,
+        bobot_alternatif.display,
+        bobot_alternatif.harga,
+        FROM bobot_alternatif
+        INNER JOIN laptop
+        ON bobot_alternatif.alternatif_id = laptop.id
+        INNER JOIN merk
+        ON laptop.merk_id = merk.is
+        INNER JOIN kategori
+        ON bobot_alternatif.kb = kategori.id
+        WHERE kategori.kategoro = $1
+        AND kategori.sub_kategori = $2
+        AND bobot_alternatif.deleted_at IS NULL`
+        const data = [kategori, sub_kategori]
+        try {
+            const result = await db.query(statement, data)
+            if (result.err) throw result.err
+            return wrapper.data(result)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async getKategoriOffice(kategori, sub_kategori) {
+        const statement = `SELECT
+        merk.merk,
+        laptop.laptop,
+        bobot_alternatif.processor,
+        bobot_alternatif.ram,
+        bobot_alternatif.penyimpanan,
+        bobot_alternatif.vga,
+        bobot_alternatif.display,
+        bobot_alternatif.harga,
+        FROM bobot_alternatif
+        INNER JOIN laptop
+        ON bobot_alternatif.alternatif_id = laptop.id
+        INNER JOIN merk
+        ON laptop.merk_id = merk.is
+        INNER JOIN kategori
+        ON bobot_alternatif.kc = kategori.id
         WHERE kategori.kategoro = $1
         AND kategori.sub_kategori = $2
         AND bobot_alternatif.deleted_at IS NULL`

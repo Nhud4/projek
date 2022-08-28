@@ -16,12 +16,28 @@ const display = require('../aplikasi/laptop/controller/display_controller')
 const Laptop = require('../aplikasi/laptop/controller/laptop_controller')
 const bobot = require('../aplikasi/laptop/controller/bobot_controller')
 
+const Brand = require('../aplikasi/handphone/controller/brand_controller')
+const Chipset = require('../aplikasi/handphone/controller/chipset_controller')
+const Internal = require('../aplikasi/handphone/controller/internal_controller')
+const RamHp = require('../aplikasi/handphone/controller/ram_controller')
+const Kamera = require('../aplikasi/handphone/controller/kamera_controller')
+const Batrai = require('../aplikasi/handphone/controller/batrai_controller')
+const Hp = require('../aplikasi/handphone/controller/hp_controller')
+
 const basicAuth = new BasicAuth()
 const bearerAuth = new BearerAuth()
 const wrapper = new Wrapper()
 const usrtAuth = new Uservalidation()
 const user = new User()
 const laptop = new Laptop()
+
+const brand = new Brand()
+const chipset = new Chipset()
+const internal = new Internal()
+const ramHp = new RamHp()
+const kamera = new Kamera()
+const batrai = new Batrai()
+const hp = new Hp()
 
 const router = express.Router()
 
@@ -76,6 +92,45 @@ router.post('/add/bobot', bearerAuth.isAuthenticated, bobot.insertBobot)
 router.get('/get/bobot/by/:id=?', bearerAuth.isAuthenticated, bobot.getById)
 router.put('/update/bobot/:id=?', bearerAuth.isAuthenticated, bobot.updateBobot)
 router.delete('/delete/bobot/:id=?', bearerAuth.isAuthenticated, bobot.deleteBobot)
+
+// hp
+router.get('/get/brand', bearerAuth.isAuthenticated, brand.getList)
+router.post('/add/brand', bearerAuth.isAuthenticated, brand.insertBrand)
+router.get('/get/brand/by/:id=?', bearerAuth.isAuthenticated, brand.getById)
+router.put('/update/brand/:id=?', bearerAuth.isAuthenticated, brand.updateBrand)
+router.delete('/delete/brand/:id=?', bearerAuth.isAuthenticated, brand.deleteBrand)
+
+router.get('/get/chipset', bearerAuth.isAuthenticated, chipset.getList)
+router.post('/add/chipset', bearerAuth.isAuthenticated, chipset.insertChipset)
+router.get('/get/chipset/by/:id=?', bearerAuth.isAuthenticated, chipset.getById)
+router.put('/update/chipset/:id=?', bearerAuth.isAuthenticated, chipset.updateChipset)
+router.delete('/delete/chipset/:id+?', bearerAuth.isAuthenticated, chipset.deleteChipset)
+
+router.get('/get/ram/hp', bearerAuth.isAuthenticated, ramHp.getList)
+router.post('/add/ram/hp', bearerAuth.isAuthenticated, ramHp.insertRam)
+router.get('/get/ram/hp/by/:id=?', bearerAuth.isAuthenticated, ramHp.getById)
+router.put('/update/ram/hp/:id=?', bearerAuth.isAuthenticated, ramHp.updateRam)
+router.delete('/delete/ram/hp/:id=?', bearerAuth.isAuthenticated, ramHp.deleteRam)
+
+router.get('/get/internal', bearerAuth.isAuthenticated, internal.getList)
+router.post('/add/internal', bearerAuth.isAuthenticated, internal.insertInternal)
+router.get('/get/internal/by/:id=?', bearerAuth.isAuthenticated, internal.getById)
+router.put('/update/internal/:id=?', bearerAuth.isAuthenticated, internal.updateInternal)
+router.delete('/delete/internal/:id=?', bearerAuth.isAuthenticated, internal.deleteInternal)
+
+router.get('/get/kamera', bearerAuth.isAuthenticated, kamera.getList)
+router.post('/add/kamera', bearerAuth.isAuthenticated, kamera.insertKamera)
+router.get('/get/kamera/by/:id=?', bearerAuth.isAuthenticated, kamera.getById)
+router.put('/update/kamera/:id=?', bearerAuth.isAuthenticated, kamera.updateKamera)
+router.delete('/delete/kamera/:id=?', bearerAuth.isAuthenticated, kamera.deleteKamera)
+
+router.get('/get/batrai', bearerAuth.isAuthenticated, batrai.getList)
+router.post('/add/batrai', bearerAuth.isAuthenticated, batrai.insertBatrai)
+router.get('/get/batrai/by/:id=?', bearerAuth.isAuthenticated, batrai.getById)
+router.put('/update/batrai/:id=?', bearerAuth.isAuthenticated, batrai.updateBtrai)
+router.delete('/delete/batrai/:id=?', bearerAuth.isAuthenticated, batrai.deleteBatrai)
+
+router.get('/hp', hp.insertHp)
 
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {

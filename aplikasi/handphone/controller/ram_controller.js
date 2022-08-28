@@ -1,15 +1,21 @@
 const Wrapper = require('../../../helper/utils/wrapper')
-const HpDomain = require('../domain/hp_domain')
+const Ram = require('../domain/ram_domain')
 
 const wrapper = new Wrapper()
-const domain = new HpDomain()
+const domain = new Ram()
 
-class HpController {
+class RamController {
     async getList(req, res) {
         const getList = await domain.getList()
         if (getList instanceof Error) return wrapper.responseError(res, getList)
 
-        const data = getList.data
+        const data = getList.data.map(item => {
+            return {
+                id: item.id,
+                ram: item.ram
+            }
+        })
+
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -18,12 +24,17 @@ class HpController {
         })
     }
 
-    async getbyId(req, res) {
+    async getById(req, res) {
         const paylaod = { ...req.params }
         const getById = await domain.getById(paylaod)
         if (getById instanceof Error) return wrapper.responseError(res, getById)
 
-        const data = getById.data
+        const data = getById.data.map(item => {
+            return {
+                id: item.id,
+                ram: item.ram
+            }
+        })
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -32,57 +43,47 @@ class HpController {
         })
     }
 
-    async insertHp(req, res) {
+    async insertRam(req, res) {
         const paylaod = { ...req.body }
-        const insertHp = await domain.insertHp()
-        if (insertHp instanceof Error) return wrapper.responseError(res, insertHp)
-
-        const data = insertHp
+        const insertRam = await domain.insertRam(paylaod)
+        if (insertRam instanceof Error) return wrapper.responseError(paylaod)
 
         return wrapper.response(res, 200, {
-            message: 'berhasil menambahkan data',
+            message: 'berhasil mendapatkan data',
             code: 200,
-            data,
+            data: { ...paylaod },
             success: true
         })
     }
 
-    async updateHp(req, res) {
+    async updateRam(req, res) {
         const paylaod = {
             ...req.params,
             ...req.body
         }
-
-        const updateHp = await domain.updateHp(paylaod)
-        if (updateHp instanceof Error) return wrapper.responseError(res, updateHp)
+        const updateRam = await domain.updateRam(paylaod)
+        if (updateRam instanceof Error) return wrapper.responseError(res, updateRam)
 
         const data = {
             id: paylaod.id,
-            brand_id: paylaod.brand_id,
-            hp: paylaod.hp,
-            chipset_id: paylaod.chipset_id,
-            internal_id: paylaod.internal_id,
-            ram_id: paylaod.ram_id,
-            baterai_id: paylaod.baterai_id,
-            kamera_id: paylaod.kamera_id,
-            harga: paylaod.harga
+            ram: paylaod.ram
         }
 
         return wrapper.response(res, 200, {
-            message: 'berhasil merubah data',
+            message: 'berhasil mendapatkan data',
             code: 200,
             data,
             success: true
         })
     }
 
-    async deleteHp(req, res) {
+    async deleteRam(req, res) {
         const paylaod = { ...req.params }
-        const deleteHp = await domain.deleteHp(paylaod)
-        if (deleteHp instanceof Error) return wrapper.responseError(res, deleteHp)
+        const deleteRam = await domain.deleteRam(paylaod)
+        if (deleteRam instanceof Error) return wrapper.responseError(res, deleteRam)
 
         return wrapper.response(res, 200, {
-            message: 'berhasil menghapus data',
+            message: 'berhasil mendapatkan data',
             code: 200,
             data: { id: paylaod.id },
             success: true
@@ -90,4 +91,4 @@ class HpController {
     }
 }
 
-module.exports = HpController
+module.exports = RamController

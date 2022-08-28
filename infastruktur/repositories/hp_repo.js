@@ -52,7 +52,8 @@ class Hp {
         ram_hp.ram,
         batrai.batrai,
         kamera.type,
-        kamera.kualitas,
+        kamera.kamera_depan,
+        kamera.kamera_belakang,
         hp.harga FROM hp
         INNER JOIN brand
         ON hp.brand_id = brand.id
@@ -108,7 +109,8 @@ class Hp {
         batrai_id,
         kamera_id,
         harga
-        ) VALUES($1, %2, $3, $4, $5, $6, $7, $8)`
+        ) VALUES($1, %2, $3, $4, $5, $6, $7, $8)
+        RETURNING id`
         const data = [
             brand_id,
             hp,

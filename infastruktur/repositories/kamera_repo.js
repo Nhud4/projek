@@ -13,7 +13,7 @@ class Kamera {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -31,9 +31,10 @@ class Kamera {
         }
     }
 
-    async getByKamera(type, kualitas) {
-        const statement = `SELECT * FROM kamera WHERE type=$1 AND kualitas=$2 AND deleted_at IS NULL`
-        const data = [type, kualitas]
+    async getByKamera(type, kamera_depan, kamera_belakang) {
+        const statement = `SELECT * FROM kamera WHERE type=$1 AND kamera_depan=$2
+        AND kamera_belakang=$3 AND deleted_at IS NULL`
+        const data = [type, kamera_depan, kamera_belakang]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
@@ -43,10 +44,10 @@ class Kamera {
         }
     }
 
-    async insertKamera(type, kualitas) {
-        const statement = `INSERT INTO kamera(type, kualitas)
-        VALUES($1, $2)`
-        const data = [type, kualitas]
+    async insertKamera(type, kamera_depan, kamera_belakang) {
+        const statement = `INSERT INTO kamera(type, kamera_depan, kamera_belakang)
+        VALUES($1, $2, $3)`
+        const data = [type, kamera_depan, kamera_belakang]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
@@ -56,10 +57,10 @@ class Kamera {
         }
     }
 
-    async updateKamera(type, kualitas, id) {
-        const statement = `UPDATE kamera SET type=$1, kamera=$2 WHERE
-        id=$3 AND deleted_at IS NULL`
-        const data = [type, kualitas, id]
+    async updateKamera(type, kamera_depan, kamera_belakang, id) {
+        const statement = `UPDATE kamera SET type=$1, kamera_depan=$2, kamera_belakang=$3
+        WHERE id=$4 AND deleted_at IS NULL`
+        const data = [type, kamera_depan, kamera_belakang, id]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
