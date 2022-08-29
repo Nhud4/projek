@@ -70,7 +70,7 @@ const insertLaptop = async (payload) => {
 
     const getData = await laptopRepo.getById(laptopId)
 
-    let processor = getData.data[0].processor
+    let processor = getData.data[0].kecepatan_processor
     let ram = getData.data[0].kapasitas_ram
     let penyimpanan = getData.data[0].kapasitas_penyimpanan
     let vga = getData.data[0].kapasitas_vga

@@ -30,7 +30,7 @@ class AlternatifRepo {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -45,22 +45,22 @@ class AlternatifRepo {
         bobot_alternatif.penyimpanan,
         bobot_alternatif.vga,
         bobot_alternatif.display,
-        bobot_alternatif.harga,
+        bobot_alternatif.harga
         FROM bobot_alternatif
         INNER JOIN laptop
         ON bobot_alternatif.alternatif_id = laptop.id
         INNER JOIN merk
-        ON laptop.merk_id = merk.is
+        ON laptop.merk_id = merk.id
         INNER JOIN kategori
         ON bobot_alternatif.ka = kategori.id
-        WHERE kategori.kategoro = $1
+        WHERE kategori.kategori = $1
         AND kategori.sub_kategori = $2
         AND bobot_alternatif.deleted_at IS NULL`
         const data = [kategori, sub_kategori]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -75,22 +75,22 @@ class AlternatifRepo {
         bobot_alternatif.penyimpanan,
         bobot_alternatif.vga,
         bobot_alternatif.display,
-        bobot_alternatif.harga,
+        bobot_alternatif.harga
         FROM bobot_alternatif
         INNER JOIN laptop
         ON bobot_alternatif.alternatif_id = laptop.id
         INNER JOIN merk
-        ON laptop.merk_id = merk.is
+        ON laptop.merk_id = merk.id
         INNER JOIN kategori
         ON bobot_alternatif.kb = kategori.id
-        WHERE kategori.kategoro = $1
+        WHERE kategori.kategori = $1
         AND kategori.sub_kategori = $2
         AND bobot_alternatif.deleted_at IS NULL`
         const data = [kategori, sub_kategori]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -105,22 +105,22 @@ class AlternatifRepo {
         bobot_alternatif.penyimpanan,
         bobot_alternatif.vga,
         bobot_alternatif.display,
-        bobot_alternatif.harga,
+        bobot_alternatif.harga
         FROM bobot_alternatif
         INNER JOIN laptop
         ON bobot_alternatif.alternatif_id = laptop.id
         INNER JOIN merk
-        ON laptop.merk_id = merk.is
+        ON laptop.merk_id = merk.id
         INNER JOIN kategori
         ON bobot_alternatif.kc = kategori.id
-        WHERE kategori.kategoro = $1
+        WHERE kategori.kategori = $1
         AND kategori.sub_kategori = $2
         AND bobot_alternatif.deleted_at IS NULL`
         const data = [kategori, sub_kategori]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }

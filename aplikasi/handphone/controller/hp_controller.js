@@ -34,15 +34,13 @@ class HpController {
 
     async insertHp(req, res) {
         const paylaod = { ...req.body }
-        const insertHp = await domain.insertHp()
+        const insertHp = await domain.insertHp(paylaod)
         if (insertHp instanceof Error) return wrapper.responseError(res, insertHp)
-
-        const data = insertHp
 
         return wrapper.response(res, 200, {
             message: 'berhasil menambahkan data',
             code: 200,
-            data,
+            data: { ...paylaod },
             success: true
         })
     }

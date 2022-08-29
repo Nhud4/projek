@@ -29,19 +29,19 @@ class ChipsetDomain {
     }
 
     async insertChipset(payload) {
-        const { chipset } = payload
+        const { chipset, versi } = payload
         const getByChipset = await chipsetModel.getByChipset(chipset)
         if (getByChipset.err) {
             return new InternalServerError('fail to get data')
         }
-        if (getByChipset.data.length > 0) {
+        if (getByChipset.data.versi === versi) {
             return new UnprocessableEntityError('unprosesseble entity', [{
                 field: 'chipset',
                 message: 'data already exists'
             }])
         }
 
-        const insertChipset = await chipsetModel.insertChipset(chipset)
+        const insertChipset = await chipsetModel.insertChipset(chipset, versi)
         if (insertChipset.err) {
             return new InternalServerError('fail to add data')
         }
@@ -49,7 +49,7 @@ class ChipsetDomain {
     }
 
     async updateChipset(payload) {
-        const { chipset, id } = payload
+        const { chipset, versi, id } = payload
         const getById = await chipsetModel.getById(id)
         if (getById.err) {
             return new InternalServerError('fail to get data')
@@ -62,14 +62,14 @@ class ChipsetDomain {
         if (getByChipset.err) {
             return new InternalServerError('fail to get data')
         }
-        if (getByChipset.data.length > 0) {
+        if (getByChipset.data.chipset === chipset || getByChipset.data.versi === versi) {
             return new UnprocessableEntityError('unprosesseble entity', [{
                 field: 'chipset',
                 message: 'data already exists'
             }])
         }
 
-        const updateChipset = await chipsetModel.updateChipset(chipset, id)
+        const updateChipset = await chipsetModel.updateChipset(chipset, versi, id)
         if (updateChipset.err) {
             return new InternalServerError('fail to update data')
         }

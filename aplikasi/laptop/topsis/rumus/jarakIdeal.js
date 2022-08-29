@@ -1,65 +1,52 @@
-const ideal = require("./idela");
-const normalisasi = require("./normalisasiTerbobot");
-
-const jarakIdealPositif = async () => {
-  const processor = await normalisasi.normalisasiProcessor();
-  const ram = await normalisasi.normalisasiRam();
-  const penyimpanan = await normalisasi.normalisasiPenyimpanan();
-  const vga = await normalisasi.normalisasiVga();
-  const display = await normalisasi.normalisasiDisplay();
-  const harga = await normalisasi.normalisasiHarga();
-
-  const n2 = await ideal.idealPositif();
-
+async function jarakIdealPositif(c1, c2, c3, c4, c5, c6, positif) {
   // processor
-  const penguranganProcessor = processor.map(function (processor) {
-    return processor - n2[0];
+  const langkah1 = c1.map(function (processor) {
+    return processor - positif[0];
   });
-  const pangkatProcessor = penguranganProcessor.map(function (
-    penguranganProcessor
+  const pangkatProcessor = langkah1.map(function (
+    langkah1
   ) {
-    return Math.pow(penguranganProcessor, 2);
+    return Math.pow(langkah1, 2);
   });
 
   // ram
-  const penguranganRam = ram.map(function (penguranganRam) {
-    return penguranganRam - n2[1];
+  const langkah2 = c2.map(function (langkah2) {
+    return langkah2 - positif[1];
   });
-  const pangkatRam = penguranganRam.map(function (penguranganRam) {
-    return Math.pow(penguranganRam, 2);
+  const pangkatRam = langkah2.map(function (langkah2) {
+    return Math.pow(langkah2, 2);
   });
 
   // penyimpanan
-  const penguranganPenyimpanan = penyimpanan.map(function (
-    penguranganPenyimpanan
-  ) {
-    return penguranganPenyimpanan - n2[2];
+  const langkah3 = c3.map(function (langkah3) {
+    return langkah3 - positif[2];
   });
-  const pangkatPenyimpanan = penguranganPenyimpanan.map(function (
-    penguranganPenyimpanan
-  ) {
-    return Math.pow(penguranganPenyimpanan, 2);
+  const pangkatPenyimpanan = langkah3.map(function (langkah3) {
+    return Math.pow(langkah3, 2);
   });
+
   // vga
-  const penguranganVga = vga.map(function (penguranganVga) {
-    return penguranganVga - n2[3];
+  const langkah4 = c4.map(function (langkah4) {
+    return langkah4 - positif[3];
   });
-  const pangkatVga = penguranganVga.map(function (penguranganVga) {
-    return Math.pow(penguranganVga, 2);
+  const pangkatVga = langkah4.map(function (langkah4) {
+    return Math.pow(langkah4, 2);
   });
+
   // display
-  const penguranganDisplay = display.map(function (penguranganDisplay) {
-    return penguranganDisplay - n2[4];
+  const langkah5 = c5.map(function (langkah5) {
+    return langkah5 - positif[4];
   });
-  const pangkatDisplay = penguranganDisplay.map(function (penguranganDisplay) {
-    return Math.pow(penguranganDisplay, 2);
+  const pangkatDisplay = langkah5.map(function (langkah5) {
+    return Math.pow(langkah5, 2);
   });
+
   // harga
-  const penguranganHarga = harga.map(function (penguranganHarga) {
-    return penguranganHarga - n2[5];
+  const langkah6 = c6.map(function (langkah6) {
+    return langkah6 - positif[5];
   });
-  const pangkatHarga = penguranganHarga.map(function (penguranganHarga) {
-    return Math.pow(penguranganHarga, 2);
+  const pangkatHarga = langkah6.map(function (langkah6) {
+    return Math.pow(langkah6, 2);
   });
 
   const baris1 = pangkatProcessor.length;
@@ -81,65 +68,56 @@ const jarakIdealPositif = async () => {
   return hasil;
 };
 
-const jarakIdealNegatif = async () => {
-  const processor = await normalisasi.normalisasiProcessor();
-  const ram = await normalisasi.normalisasiRam();
-  const penyimpanan = await normalisasi.normalisasiPenyimpanan();
-  const vga = await normalisasi.normalisasiVga();
-  const display = await normalisasi.normalisasiDisplay();
-  const harga = await normalisasi.normalisasiHarga();
-
-  const n2 = await ideal.idealNegatif();
+async function jarakIdealNegatif(c1, c2, c3, c4, c5, c6, negatif) {
 
   // processor
-  const penguranganProcessor = processor.map(function (processor) {
-    return processor - n2[0];
+  const langkah1 = c1.map(function (c1) {
+    return c1 - negatif[0];
   });
-  const pangkatProcessor = penguranganProcessor.map(function (
-    penguranganProcessor
+  const pangkatProcessor = langkah1.map(function (
+    langkah1
   ) {
-    return Math.pow(penguranganProcessor, 2);
+    return Math.pow(langkah1, 2);
   });
 
   // ram
-  const penguranganRam = ram.map(function (penguranganRam) {
-    return penguranganRam - n2[1];
+  const langkah2 = c2.map(function (langkah2) {
+    return langkah2 - negatif[1];
   });
-  const pangkatRam = penguranganRam.map(function (penguranganRam) {
-    return Math.pow(penguranganRam, 2);
+  const pangkatRam = langkah2.map(function (langkah2) {
+    return Math.pow(langkah2, 2);
   });
 
   // penyimpanan
-  const penguranganPenyimpanan = penyimpanan.map(function (
-    penguranganPenyimpanan
-  ) {
-    return penguranganPenyimpanan - n2[2];
+  const langkah3 = c3.map(function (langkah3) {
+    return langkah3 - negatif[2];
   });
-  const pangkatPenyimpanan = penguranganPenyimpanan.map(function (
-    penguranganPenyimpanan
-  ) {
-    return Math.pow(penguranganPenyimpanan, 2);
+  const pangkatPenyimpanan = langkah3.map(function (langkah3) {
+    return Math.pow(langkah3, 2);
   });
+
   // vga
-  const penguranganVga = vga.map(function (penguranganVga) {
-    return penguranganVga - n2[3];
+  const langkah4 = c4.map(function (langkah4) {
+    return langkah4 - negatif[3];
   });
-  const pangkatVga = penguranganVga.map(function (penguranganVga) {
-    return Math.pow(penguranganVga, 2);
+  const pangkatVga = langkah4.map(function (langkah4) {
+    return Math.pow(langkah4, 2);
   });
+
   // display
-  const penguranganDisplay = display.map(function (penguranganDisplay) {
-    return penguranganDisplay - n2[4];
+  const langkah5 = c5.map(function (langkah5) {
+    return langkah5 - negatif[4];
   });
-  const pangkatDisplay = penguranganDisplay.map(function (penguranganDisplay) {
-    return Math.pow(penguranganDisplay, 2);
+  const pangkatDisplay = langkah5.map(function (langkah5) {
+    return Math.pow(langkah5, 2);
   });
+
   // harga
-  const penguranganHarga = harga.map(function (penguranganHarga) {
-    return penguranganHarga - n2[5];
+  const langkah6 = c6.map(function (langkah6) {
+    return langkah6 - negatif[5];
   });
-  const pangkatHarga = penguranganHarga.map(function (penguranganHarga) {
-    return Math.pow(penguranganHarga, 2);
+  const pangkatHarga = langkah6.map(function (langkah6) {
+    return Math.pow(langkah6, 2);
   });
 
   const baris1 = pangkatProcessor.length;

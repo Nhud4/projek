@@ -1,100 +1,86 @@
-const bobot = require("../query/selectBobot");
-const ternormalisasi = require("./ternormalisasi");
+async function processor(c1, bobot) {
 
-const normalisasiProcessor = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.processor();
-
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.processor;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c1.map(function (nilai) {
+    return nilai * n1;
   });
+
   return hasil;
 };
 
-const normalisasiRam = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.ram();
+async function ram(c2, bobot) {
 
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.ram;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c2.map(function (nilai) {
+    return nilai * n1;
   });
 
   return hasil;
 };
 
-const normalisasiPenyimpanan = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.penyimpanan();
+async function penyimpanan(c3, bobot) {
 
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.penyimpanan;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c3.map(function (nilai) {
+    return nilai * n1;
   });
 
   return hasil;
 };
 
-const normalisasiVga = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.vga();
+async function vga(c4, bobot) {
 
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.vga;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c4.map(function (nilai) {
+    return nilai * n1;
   });
 
   return hasil;
 };
 
-const normalisasiDisplay = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.display();
+async function display(c5, bobot) {
 
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.display;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c5.map(function (nilai) {
+    return nilai * n1;
   });
 
   return hasil;
 };
 
-const normalisasiHarga = async () => {
-  const n1 = await bobot.allBobotKA1();
-  const n2 = await ternormalisasi.harga();
+async function harga(c6, bobot) {
 
-  const n3 = n1.map(function (element) {
+  const n1 = bobot.map(function (element) {
     return element.harga;
   });
 
-  const hasil = n2.map(function (n2) {
-    return n2 * n3;
+  const hasil = c6.map(function (nilai) {
+    return nilai * n1;
   });
 
   return hasil;
 };
 
 module.exports = {
-  normalisasiProcessor,
-  normalisasiRam,
-  normalisasiPenyimpanan,
-  normalisasiVga,
-  normalisasiDisplay,
-  normalisasiHarga,
+  processor,
+  ram,
+  penyimpanan,
+  vga,
+  display,
+  harga,
 };

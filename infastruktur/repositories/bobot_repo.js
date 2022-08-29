@@ -12,14 +12,14 @@ const getListBobot = async () => {
     try {
         const result = await db.query(statement)
         if (result.err) throw result.err
-        return wrapper.data(result)
+        return wrapper.data(result.data)
     } catch (err) {
         return wrapper.error(err.message)
     }
 }
 
 const getByBobot = async (bobot) => {
-    const statement = `SELECT * FROM bobot WHERE bobot = $1 WHERE deleteda_at IS NULL`
+    const statement = `SELECT * FROM bobot WHERE bobot = $1 AND deleted_at IS NULL`
     const data = [bobot]
     try {
         const result = await db.query(statement, data)
@@ -31,7 +31,7 @@ const getByBobot = async (bobot) => {
 }
 
 const getById = async (id) => {
-    const statement = `SELECT * FROM bobot WHERE id =$1 WHERE deleteda_at IS NULL`
+    const statement = `SELECT * FROM bobot WHERE id =$1 AND deleted_at IS NULL`
     const data = [id]
     try {
         const result = await db.query(statement, data)

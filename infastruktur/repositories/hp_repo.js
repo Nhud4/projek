@@ -18,7 +18,8 @@ class Hp {
         ram_hp.ram,
         batrai.batrai,
         kamera.type,
-        kamera.kualitas,
+        kamera.kamera_depan,
+        kamera.kamera_belakang,
         hp.harga FROM hp
         INNER JOIN brand
         ON hp.brand_id = brand.id
@@ -96,7 +97,7 @@ class Hp {
         chipset_id,
         internal_id,
         ram_id,
-        baterai_id,
+        batrai_id,
         kamera_id,
         harga
     ) {
@@ -109,7 +110,7 @@ class Hp {
         batrai_id,
         kamera_id,
         harga
-        ) VALUES($1, %2, $3, $4, $5, $6, $7, $8)
+        ) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING id`
         const data = [
             brand_id,
@@ -117,7 +118,7 @@ class Hp {
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga
         ]
@@ -136,7 +137,7 @@ class Hp {
         chipset_id,
         internal_id,
         ram_id,
-        baterai_id,
+        batrai_id,
         kamera_id,
         harga,
         id
@@ -147,17 +148,18 @@ class Hp {
         chipset_id=$3,
         internal_id=$4,
         ram_id=$5,
-        baterai_id=$6,
+        batrai_id=$6,
         kamera_id=$7,
         harga=$8
-        WHERE id=$9 AND deleted_at IS NULL`
+        WHERE id=$9 AND deleted_at IS NULL
+        RETURNING id`
         const data = [
             brand_id,
             hp,
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga,
             id

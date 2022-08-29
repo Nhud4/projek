@@ -63,7 +63,7 @@ class AlternatifHp {
         hp_id,
         ram,
         internal,
-        bartai,
+        batrai,
         kamera,
         harga
     ) {
@@ -71,7 +71,7 @@ class AlternatifHp {
         hp_id,
         ram,
         internal,
-        bartai,
+        batrai,
         kamera,
         harga
         ) VALUES($1, $2, $3, $4, $5, $6)`
@@ -79,7 +79,7 @@ class AlternatifHp {
             hp_id,
             ram,
             internal,
-            bartai,
+            batrai,
             kamera,
             harga
         ]
@@ -92,10 +92,10 @@ class AlternatifHp {
         }
     }
 
-    async insertAlternatifHp(
+    async updateAlternatifHp(
         ram,
         internal,
-        bartai,
+        batrai,
         kamera,
         harga,
         hp_id
@@ -103,18 +103,18 @@ class AlternatifHp {
         const statement = `UPDATE bobot_alternatif_hp SET
         ram =$1,
         internal =$2,
-        bartai =$3,
+        batrai =$3,
         kamera =$4,
         harga =$5
         WHERE hp_id =$6
         AND deleted_at IS NULL`
         const data = [
-            hp_id,
             ram,
             internal,
-            bartai,
+            batrai,
             kamera,
-            harga
+            harga,
+            hp_id
         ]
         try {
             const result = await db.query(statement, data)

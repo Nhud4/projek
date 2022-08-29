@@ -1,66 +1,52 @@
-const pembagi = require("./pembagi");
+async function processor(alternatif, pembagiC1) {
 
-const processor = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.processor();
-
-  const hasilProcessor = n1.map(function (element) {
-    return element.processor / n2;
+  const hasilProcessor = alternatif.map(function (element) {
+    return element.processor / pembagiC1;
   });
 
   return hasilProcessor;
 };
 
-const ram = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.ram();
+async function ram(alternatif, pembagiC2) {
 
-  const hasilRam = n1.map(function (element) {
-    return element.ram / n2;
+  const hasilRam = alternatif.map(function (element) {
+    return element.ram / pembagiC2;
   });
 
   return hasilRam;
 };
 
-const penyimpanan = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.penyimpanan();
+async function penyimpanan(alternatif, pembagiC3) {
 
-  const hasilPenyimpanan = n1.map(function (element) {
-    return element.penyimpanan / n2;
+  const hasilPenyimpanan = alternatif.map(function (element) {
+    return element.penyimpanan / pembagiC3;
   });
 
   return hasilPenyimpanan;
 };
 
-const vga = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.vga();
+async function vga(element, pembagiC4) {
 
-  const hasilVga = n1.map(function (element) {
-    return element.vga / n2;
+  const hasilVga = element.map(function (element) {
+    return element.vga / pembagiC4;
   });
 
   return hasilVga;
 };
 
-const display = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.display();
+async function display(alternatif, pembagiC5) {
 
-  const hasilDisplay = n1.map(function (element) {
-    return element.display / n2;
+  const hasilDisplay = alternatif.map(function (element) {
+    return element.display / pembagiC5;
   });
 
   return hasilDisplay;
 };
 
-const harga = async () => {
-  const n1 = await pembagi.values();
-  const n2 = await pembagi.harga();
+async function harga(element, pembagiC6) {
 
-  const hasilHarga = n1.map(function (element) {
-    return element.harga / n2;
+  const hasilHarga = element.map(function (element) {
+    return element.harga / pembagiC6;
   });
 
   return hasilHarga;

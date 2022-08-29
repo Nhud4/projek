@@ -12,7 +12,8 @@ class ChipsetController {
         const data = getList.data.map(item => {
             return {
                 id: item.id,
-                chipset: item.chipset
+                chipset: item.chipset,
+                versi: item.versi
             }
         })
         return wrapper.response(res, 200, {
@@ -30,7 +31,8 @@ class ChipsetController {
 
         const data = getById.data.map(item => {
             return {
-                chipset: item.chipset
+                chipset: item.chipset,
+                versi: item.versi
             }
         })
         return wrapper.response(res, 200, {
@@ -57,14 +59,15 @@ class ChipsetController {
     async updateChipset(req, res) {
         const paylaod = {
             ...req.params,
-            ...req, body
+            ...req.body
         }
         const updateChipset = await domain.updateChipset(paylaod)
         if (updateChipset instanceof Error) return wrapper.responseError(res, updateChipset)
 
         const data = {
             id: paylaod.id,
-            chipset: paylaod.chipset
+            chipset: paylaod.chipset,
+            versi: paylaod.versi
         }
 
         return wrapper.response(res, 200, {
@@ -81,7 +84,7 @@ class ChipsetController {
         if (deleteChipset instanceof Error) return wrapper.responseError(res, deleteChipset)
 
         return wrapper.response(res, 200, {
-            message: 'berhasil mendapatkan data',
+            message: 'berhasil menghapus data',
             code: 200,
             data: { id: paylaod.id },
             success: true

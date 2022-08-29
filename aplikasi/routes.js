@@ -24,6 +24,8 @@ const Kamera = require('../aplikasi/handphone/controller/kamera_controller')
 const Batrai = require('../aplikasi/handphone/controller/batrai_controller')
 const Hp = require('../aplikasi/handphone/controller/hp_controller')
 
+const TopisisLaptop = require('../aplikasi/laptop/topsis/data')
+
 const basicAuth = new BasicAuth()
 const bearerAuth = new BearerAuth()
 const wrapper = new Wrapper()
@@ -38,6 +40,8 @@ const ramHp = new RamHp()
 const kamera = new Kamera()
 const batrai = new Batrai()
 const hp = new Hp()
+
+const topisisLaptop = new TopisisLaptop()
 
 const router = express.Router()
 
@@ -130,7 +134,13 @@ router.get('/get/batrai/by/:id=?', bearerAuth.isAuthenticated, batrai.getById)
 router.put('/update/batrai/:id=?', bearerAuth.isAuthenticated, batrai.updateBtrai)
 router.delete('/delete/batrai/:id=?', bearerAuth.isAuthenticated, batrai.deleteBatrai)
 
-router.get('/hp', hp.insertHp)
+router.get('/get/hp', bearerAuth.isAuthenticated, hp.getList)
+router.post('/add/hp', bearerAuth.isAuthenticated, hp.insertHp)
+router.get('/get/hp/by/:id=?', bearerAuth.isAuthenticated, hp.getbyId)
+router.put('/update/hp/:id=?', bearerAuth.isAuthenticated, hp.updateHp)
+router.delete('/delete/hp/:id=?', bearerAuth.isAuthenticated, hp.deleteHp)
+
+router.get('/coba', topisisLaptop.data)
 
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {

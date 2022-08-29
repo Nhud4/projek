@@ -174,7 +174,8 @@ const updateLaptop = async (
     display_id =$7,
     harga =$8
     WHERE id =$9
-    AND deleted_at IS NULL`
+    AND deleted_at IS NULL
+    RETURNING id`
     const data = [
         merk_id,
         laptop,

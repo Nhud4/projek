@@ -13,7 +13,7 @@ class Chipset {
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
-            return wrapper.data(result)
+            return wrapper.data(result.data)
         } catch (err) {
             return wrapper.error(err.message)
         }
@@ -45,7 +45,7 @@ class Chipset {
 
     async insertChipset(chipset, versi) {
         const statement = `INSERT INTO chipset(chipset, versi)
-        VALUES($1, $1)`
+        VALUES($1, $2)`
         const data = [chipset, versi]
         try {
             const result = await db.query(statement, data)
@@ -70,7 +70,7 @@ class Chipset {
     }
 
     async deleteChipset(id) {
-        const statement = `UPDATE chipset SET deleted_at IS NULL
+        const statement = `UPDATE chipset SET deleted_at = NOW()
         WHERE id=$1`
         const data = [id]
         try {

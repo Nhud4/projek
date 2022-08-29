@@ -2,26 +2,26 @@ class Bobot {
     async kategori(processor) {
 
         let data = []
-        if (processor <= '3,0 Ghz') {
+        if (processor < '3,0 Ghz') {
 
             data = {
                 ka: 1,
                 kb: 4,
-                kc: 8
+                kc: 7
             }
         }
-        if (processor === '3,0 Ghz' && processor <= '4,5 Ghz') {
+        if (processor === '3,0 Ghz' || processor < '4,5 Ghz') {
             data = {
                 ka: 2,
                 kb: 5,
-                kc: 7
+                kc: 8
             }
         }
-        if (processor > '4,5 Ghz') {
+        if (processor === '4,5 Ghz' || processor > '4,5 Ghz') {
             data = {
                 ka: 3,
                 kb: 6,
-                kc: 7
+                kc: 8
             }
         }
 
@@ -34,16 +34,16 @@ class Bobot {
         if (processor < '2,0 Ghz') {
             c1 = 1
         }
-        if (processor === '2,0 Ghz' && processor < '3,0 Ghz') {
+        if (processor === '2,0 Ghz' || processor < '3,0 Ghz') {
             c1 = 2
         }
-        if (processor === '3,0 Ghz' && processor < '3,5 Ghz') {
+        if (processor === '3,0 Ghz' || processor < '3,5 Ghz') {
             c1 = 3
         }
-        if (processor === '3,5 Ghz' && processor <= '4,5 Ghz') {
+        if (processor === '3,5 Ghz' || processor < '4,5 Ghz') {
             c1 = 4
         }
-        if (processor > '4,5 Ghz') {
+        if (processor === '4,5 Ghz' || processor > '4,5 Ghz') {
             c1 = 5
         }
         return c1
@@ -63,7 +63,7 @@ class Bobot {
         if (ram === '8 Gb') {
             c2 = 4
         }
-        if (ram >= '16 Gb') {
+        if (ram === '16 Gb') {
             c2 = 5
         }
         return c2
@@ -83,7 +83,7 @@ class Bobot {
         if (penyimpanan === '512 Gb') {
             c3 = 4
         }
-        if (penyimpanan >= '1 Tb') {
+        if (penyimpanan === '1 Tb' && penyimpanan > '1 Tb') {
             c3 = 5
         }
         return c3

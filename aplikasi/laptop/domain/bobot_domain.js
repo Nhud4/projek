@@ -47,12 +47,12 @@ const insertBobot = async (payload) => {
 
 const deleteBobot = async (payload) => {
     const { id } = payload
-    const getById = await bobotRepo.getByBobot(id)
+    const getById = await bobotRepo.getById(id)
     if (getById.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
     if (getById.data.length === 0) {
-        return new NotFoundError()
+        return new NotFoundError('data not found')
     }
 
     const deleteBobot = await bobotRepo.deleteBobot(id)
@@ -76,7 +76,7 @@ const updateBobot = async (payload) => {
     if (getByBobot.err) {
         return new InternalServerError('gagal mendapatkan data')
     }
-    if (getByBobot.data.length > 0) {
+    if (getByBobot.data.bobot !== getById.data.bobot) {
         return new UnprocessableEntityError('tidak dapat memproses', [{
             field: 'bobot',
             message: 'data telah ada'

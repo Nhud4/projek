@@ -70,11 +70,11 @@ class HpDomain {
         const id = insertHp.data[0].id
         const getById = await hpModel.getById(id)
 
-        const getRam = getById.data.ram
-        const getInternal = getById.data.internal
-        const getBartai = getById.data.bartai
-        const kamera_depan = getById.data.kamera_depan
-        const kamera_belakang = getById.data.kamera_belakang
+        const getRam = getById.data[0].ram
+        const getInternal = getById.data[0].internal
+        const getBartai = getById.data[0].batrai
+        const kamera_depan = getById.data[0].kamera_depan
+        const kamera_belakang = getById.data[0].kamera_belakang
 
         const ram = await rules.bobotRam(getRam)
         const internal = await rules.bobotInternal(getInternal)
@@ -103,7 +103,7 @@ class HpDomain {
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga,
             id
@@ -120,7 +120,7 @@ class HpDomain {
         if (getByHp.err) {
             return new InternalServerError('fail to get data')
         }
-        if (getByHp.data.length > 0) {
+        if (getByHp.data.hp !== getById.data.hp) {
             return new UnprocessableEntityError('unprocesseble entity', [{
                 field: 'hp',
                 message: 'data already exists'
@@ -133,7 +133,7 @@ class HpDomain {
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga,
             id
@@ -142,24 +142,28 @@ class HpDomain {
             return new InternalServerError('fail to update data')
         }
 
-        const getRam = getById.data.ram
-        const getInternal = getById.data.internal
-        const getBartai = getById.data.bartai
-        const kamera_depan = getById.data.kamera_depan
-        const kamera_belakang = getById.data.kamera_belakang
+        const hp_id = updateHp.data[0].id
+
+        const getData = await hpModel.getById(hp_id)
+
+        const getRam = getData.data[0].ram
+        const getInternal = getData.data[0].internal
+        const getBartai = getData.data[0].batrai
+        const kamera_depan = getData.data[0].kamera_depan
+        const kamera_belakang = getData.data[0].kamera_belakang
 
         const ram = await rules.bobotRam(getRam)
         const internal = await rules.bobotInternal(getInternal)
         const batrai = await rules.bobotBatrai(getBartai)
         const kamera = await rules.bobotKamera(kamera_depan, kamera_belakang)
 
-        const updateAlternatif = await alternatif.updateAlternatif(
+        const updateAlternatif = await alternatif.updateAlternatifHp(
             ram,
             internal,
             batrai,
             kamera,
             harga,
-            id
+            hp_id
         )
         if (updateAlternatif.err) {
             return new InternalServerError('fail to update alternatif')
