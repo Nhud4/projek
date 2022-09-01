@@ -1,10 +1,10 @@
 const Wrapper = require('../../../helper/utils/wrapper')
-const Ram = require('../domain/ram_domain')
+const BobotDomain = require('../domain/bobot_domain')
 
 const wrapper = new Wrapper()
-const domain = new Ram()
+const domain = new BobotDomain()
 
-class RamController {
+class BobotHpController {
     async getList(req, res) {
         const getList = await domain.getList()
         if (getList instanceof Error) return wrapper.responseError(res, getList)
@@ -12,27 +12,12 @@ class RamController {
         const data = getList.data.map(item => {
             return {
                 id: item.id,
-                ram: item.ram
-            }
-        })
+                ram: item.ram,
+                internal: item.internal,
+                batrai: item.batrai,
+                kamera: item.kamera,
+                harga: item.harga
 
-        return wrapper.response(res, 200, {
-            message: 'berhasil mendapatkan data',
-            code: 200,
-            data,
-            success: true
-        })
-    }
-
-    async getById(req, res) {
-        const paylaod = { ...req.params }
-        const getById = await domain.getById(paylaod)
-        if (getById instanceof Error) return wrapper.responseError(res, getById)
-
-        const data = getById.data.map(item => {
-            return {
-                id: item.id,
-                ram: item.ram
             }
         })
         return wrapper.response(res, 200, {
@@ -43,10 +28,10 @@ class RamController {
         })
     }
 
-    async insertRam(req, res) {
+    async insertBobot(req, res) {
         const paylaod = { ...req.body }
-        const insertRam = await domain.insertRam(paylaod)
-        if (insertRam instanceof Error) return wrapper.responseError(res, insertRam)
+        const insertBobot = await domain.insertBobot(paylaod)
+        if (insertBobot instanceof Error) return wrapper.responseError(res, insertBobot)
 
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
@@ -56,19 +41,22 @@ class RamController {
         })
     }
 
-    async updateRam(req, res) {
+    async updateBobot(req, res) {
         const paylaod = {
             ...req.params,
             ...req.body
         }
-        const updateRam = await domain.updateRam(paylaod)
-        if (updateRam instanceof Error) return wrapper.responseError(res, updateRam)
+        const updateBobot = await domain.updateBobot(paylaod)
+        if (updateBobot instanceof Error) return wrapper.responseError(res, updateBobot)
 
         const data = {
             id: paylaod.id,
-            ram: paylaod.ram
+            ram: paylaod.ram,
+            internal: paylaod.internal,
+            batrai: paylaod.batrai,
+            kamera: paylaod.kamera,
+            harga: paylaod.harga
         }
-
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
             code: 200,
@@ -77,10 +65,10 @@ class RamController {
         })
     }
 
-    async deleteRam(req, res) {
+    async deleteBobot(req, res) {
         const paylaod = { ...req.params }
-        const deleteRam = await domain.deleteRam(paylaod)
-        if (deleteRam instanceof Error) return wrapper.responseError(res, deleteRam)
+        const deleteBobot = await domain.deleteBobot(paylaod)
+        if (deleteBobot instanceof Error) return wrapper.responseError(res, deleteBobot)
 
         return wrapper.response(res, 200, {
             message: 'berhasil mendapatkan data',
@@ -91,4 +79,4 @@ class RamController {
     }
 }
 
-module.exports = RamController
+module.exports = BobotHpController

@@ -23,8 +23,10 @@ const RamHp = require('../aplikasi/handphone/controller/ram_controller')
 const Kamera = require('../aplikasi/handphone/controller/kamera_controller')
 const Batrai = require('../aplikasi/handphone/controller/batrai_controller')
 const Hp = require('../aplikasi/handphone/controller/hp_controller')
+const BobotHp = require('../aplikasi/handphone/controller/bobot_controller')
 
 const TopisisLaptop = require('../aplikasi/laptop/topsis/data')
+const TopisisHandphone = require('../aplikasi/handphone/topsis/data')
 
 const basicAuth = new BasicAuth()
 const bearerAuth = new BearerAuth()
@@ -40,13 +42,16 @@ const ramHp = new RamHp()
 const kamera = new Kamera()
 const batrai = new Batrai()
 const hp = new Hp()
+const bobotHp = new BobotHp()
 
 const topisisLaptop = new TopisisLaptop()
+const topisisHandphone = new TopisisHandphone()
 
 const router = express.Router()
 
 router.post("/login", basicAuth.isAuthenticated, usrtAuth.login, user.login)
 router.post('/register', basicAuth.isAuthenticated, usrtAuth.register, user.register)
+router.get('/count', user.countdata)
 
 // laptop
 router.get('/get/merk', bearerAuth.isAuthenticated, merk.getList)
@@ -140,7 +145,13 @@ router.get('/get/hp/by/:id=?', bearerAuth.isAuthenticated, hp.getbyId)
 router.put('/update/hp/:id=?', bearerAuth.isAuthenticated, hp.updateHp)
 router.delete('/delete/hp/:id=?', bearerAuth.isAuthenticated, hp.deleteHp)
 
-router.get('/coba', topisisLaptop.data)
+router.get('/get/bobot/hp', bobotHp.getList)
+router.post('/add/bobot/hp', bobotHp.insertBobot)
+router.put('/update/bobot/hp/:id=?', bobotHp.updateBobot)
+router.delete('/delete/bobot/hp/:id=?', bobotHp.deleteBobot)
+
+router.get('/topsis/laptop', topisisLaptop.data)
+router.get('/topsis/hanphone', topisisHandphone.data)
 
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {

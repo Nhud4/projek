@@ -10,7 +10,7 @@ const wrapper = new Wrapper()
 class AlternatifHp {
     async getLis() {
         const statement = `SELECT
-        hp.merk,
+        brand.brand,
         hp.hp,
         bobot_alternatif_hp.ram,
         bobot_alternatif_hp.internal,
@@ -22,7 +22,6 @@ class AlternatifHp {
         ON bobot_alternatif_hp.hp_id = hp.id
         INNER JOIN brand
         ON hp.brand_id = brand.id
-        FROM bobot_alternatif_hp
         WHERE bobot_alternatif_hp.deleted_at IS NULL`
         try {
             const result = await db.query(statement)
@@ -132,6 +131,28 @@ class AlternatifHp {
         const data = [hp_id]
         try {
             const result = await db.query(statement, data)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async countLaptop() {
+        const statement = `SELECT COUNT(*) AS laptop FROM laptop`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async countHp() {
+        const statement = `SELECT COUNT(*) AS hp FROM hp`
+        try {
+            const result = await db.query(statement)
             if (result.err) throw result.err
             return wrapper.data(result.data)
         } catch (err) {

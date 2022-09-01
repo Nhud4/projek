@@ -1,13 +1,16 @@
 const {
     InternalServerError,
     UnprocessableEntityError,
+    UnauthorizedError,
     NotFoundError
 } = require('../../helper/error')
 const Password = require('../../helper/utils/password')
 const AuthModel = require('./user_repo')
+const Count = require('../../infastruktur/repositories/alternatif_hp_repo')
 
 const authModel = new AuthModel()
 const passwordUtils = new Password()
+const count = new Count()
 
 class AuthDomain {
     async Login(paylaod) {
@@ -115,6 +118,28 @@ class AuthDomain {
             return new InternalServerError('fail to delete user')
         }
         return deleteUser
+    }
+
+    async count() {
+        const admin = await authModel.countAdmin()
+        const super_admin = await authModel.countSuperAdmin()
+        const user = await authModel.countUser()
+        const laptop = await count.countLaptop()
+        const hp = await count.countHp()
+
+        if (admin.err || super_admin.err || laptop.err || hp.err) {
+            return new InternalServerError('fail to get data')
+        }
+
+        const dataCount = {
+            admin: admin.data[0].admin,
+            super_admin: super_admin.data[0].super_user,
+            total_user: user.data[0].user,
+            laptop: parseInt(laptop.data[0].laptop),
+            hp: parseInt(hp.data[0].hp)
+        }
+
+        return dataCount
     }
 }
 

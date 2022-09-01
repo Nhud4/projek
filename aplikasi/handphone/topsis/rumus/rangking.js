@@ -1,6 +1,4 @@
 async function rangking(preferensi) {
-  // const rank = preferensi.sort((a, b) => b - a);
-
   var sorted = preferensi.slice().sort(function (a, b) { return b - a })
   var ranks = preferensi.slice().map(function (v) { return sorted.indexOf(v) + 1 });
 

@@ -54,6 +54,19 @@ class userController {
             success: true
         })
     }
+
+    async countdata(req, res) {
+        const count = await domain.count()
+        if (count instanceof Error) return wrapper.responseError(res, count)
+
+        const data = count
+        return wrapper.response(res, 200, {
+            message: 'register success',
+            code: 201,
+            data,
+            success: true
+        })
+    }
 }
 
 module.exports = userController

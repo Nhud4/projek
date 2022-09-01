@@ -1,6 +1,6 @@
 const Wrapper = require('../../../helper/utils/wrapper')
-const bobot = require('../domain/bobot_domain')
-const Alternatif = require('../domain/alternatif_domain')
+const Bobot = require('../domain/bobot_domain')
+const Alternatif = require('../domain/alternatif_hp_domain')
 const pembagi = require('./rumus/pembagi')
 const ternormalisasi = require('./rumus/ternormalisasi')
 const normalisasiTerbobot = require('./rumus/normalisasiTerbobot')
@@ -11,42 +11,37 @@ const rank = require('./rumus/rangking')
 
 const alternatif = new Alternatif()
 const wrapper = new Wrapper()
+const bobot = new Bobot()
 
-class TopisisLaptop {
+class TopisisHandphone {
     async data(req, res) {
-        const payload = { ...req.body }
+        const dataBobot = await bobot.getList()
+        const dataAlternatif = await alternatif.getList()
 
-        const dataBobot = await bobot.getByBobot(payload)
-        const dataAlternatif = await alternatif.getByKategori(payload)
+        const pembagiC1 = await pembagi.ram(dataAlternatif.data)
+        const pembagiC2 = await pembagi.internal(dataAlternatif.data)
+        const pembagiC3 = await pembagi.batrai(dataAlternatif.data)
+        const pembagiC4 = await pembagi.kamera(dataAlternatif.data)
+        const pembagiC5 = await pembagi.harga(dataAlternatif.data)
 
-        const pembagiC1 = await pembagi.processor(dataAlternatif.data)
-        const pembagiC2 = await pembagi.ram(dataAlternatif.data)
-        const pembagiC3 = await pembagi.penyimpanan(dataAlternatif.data)
-        const pembagiC4 = await pembagi.vga(dataAlternatif.data)
-        const pembagiC5 = await pembagi.display(dataAlternatif.data)
-        const pembagiC6 = await pembagi.harga(dataAlternatif.data)
+        const ternormalisasiC1 = await ternormalisasi.ram(dataAlternatif.data, pembagiC1[0])
+        const ternormalisasiC2 = await ternormalisasi.internal(dataAlternatif.data, pembagiC2[0])
+        const ternormalisasiC3 = await ternormalisasi.batrai(dataAlternatif.data, pembagiC3[0])
+        const ternormalisasiC4 = await ternormalisasi.kamera(dataAlternatif.data, pembagiC4[0])
+        const ternormalisasiC5 = await ternormalisasi.harga(dataAlternatif.data, pembagiC5[0])
 
-        const ternormalisasiC1 = await ternormalisasi.processor(dataAlternatif.data, pembagiC1[0])
-        const ternormalisasiC2 = await ternormalisasi.ram(dataAlternatif.data, pembagiC2[0])
-        const ternormalisasiC3 = await ternormalisasi.penyimpanan(dataAlternatif.data, pembagiC3[0])
-        const ternormalisasiC4 = await ternormalisasi.vga(dataAlternatif.data, pembagiC4[0])
-        const ternormalisasiC5 = await ternormalisasi.display(dataAlternatif.data, pembagiC5[0])
-        const ternormalisasiC6 = await ternormalisasi.harga(dataAlternatif.data, pembagiC6[0])
-
-        const normalisasiTerbobotC1 = await normalisasiTerbobot.processor(ternormalisasiC1, dataBobot.data)
-        const normalisasiTerbobotC2 = await normalisasiTerbobot.ram(ternormalisasiC2, dataBobot.data)
-        const normalisasiTerbobotC3 = await normalisasiTerbobot.penyimpanan(ternormalisasiC3, dataBobot.data)
-        const normalisasiTerbobotC4 = await normalisasiTerbobot.vga(ternormalisasiC4, dataBobot.data)
-        const normalisasiTerbobotC5 = await normalisasiTerbobot.display(ternormalisasiC5, dataBobot.data)
-        const normalisasiTerbobotC6 = await normalisasiTerbobot.harga(ternormalisasiC6, dataBobot.data)
+        const normalisasiTerbobotC1 = await normalisasiTerbobot.ram(ternormalisasiC1, dataBobot.data)
+        const normalisasiTerbobotC2 = await normalisasiTerbobot.internal(ternormalisasiC2, dataBobot.data)
+        const normalisasiTerbobotC3 = await normalisasiTerbobot.batrai(ternormalisasiC3, dataBobot.data)
+        const normalisasiTerbobotC4 = await normalisasiTerbobot.kamera(ternormalisasiC4, dataBobot.data)
+        const normalisasiTerbobotC5 = await normalisasiTerbobot.harga(ternormalisasiC5, dataBobot.data)
 
         const positif = await ideal.idealPositif(
             normalisasiTerbobotC1,
             normalisasiTerbobotC2,
             normalisasiTerbobotC3,
             normalisasiTerbobotC4,
-            normalisasiTerbobotC5,
-            normalisasiTerbobotC6
+            normalisasiTerbobotC5
         )
 
         const negatif = await ideal.idealNegatif(
@@ -54,8 +49,7 @@ class TopisisLaptop {
             normalisasiTerbobotC2,
             normalisasiTerbobotC3,
             normalisasiTerbobotC4,
-            normalisasiTerbobotC5,
-            normalisasiTerbobotC6
+            normalisasiTerbobotC5
         )
 
         const idealPositif = await jarakIdeal.jarakIdealPositif(
@@ -64,7 +58,6 @@ class TopisisLaptop {
             normalisasiTerbobotC3,
             normalisasiTerbobotC4,
             normalisasiTerbobotC5,
-            normalisasiTerbobotC6,
             positif
         )
 
@@ -74,7 +67,6 @@ class TopisisLaptop {
             normalisasiTerbobotC3,
             normalisasiTerbobotC4,
             normalisasiTerbobotC5,
-            normalisasiTerbobotC6,
             negatif
         )
 
@@ -90,24 +82,21 @@ class TopisisLaptop {
                 c2: pembagiC2[0],
                 c3: pembagiC3[0],
                 c4: pembagiC4[0],
-                c5: pembagiC5[0],
-                c6: pembagiC6[0]
+                c5: pembagiC5[0]
             },
             alternatifTerbobot: {
                 c1: ternormalisasiC1,
                 c2: ternormalisasiC2,
                 c3: ternormalisasiC3,
                 c4: ternormalisasiC4,
-                c5: ternormalisasiC5,
-                c6: ternormalisasiC6
+                c5: ternormalisasiC5
             },
             normalisasiTerbobot: {
                 c1: normalisasiTerbobotC1,
                 c2: normalisasiTerbobotC2,
                 c3: normalisasiTerbobotC3,
                 c4: normalisasiTerbobotC4,
-                c5: normalisasiTerbobotC5,
-                c6: normalisasiTerbobotC6
+                c5: normalisasiTerbobotC5
             },
             idealPositif: positif,
             idealNegatif: negatif,
@@ -126,4 +115,4 @@ class TopisisLaptop {
     }
 }
 
-module.exports = TopisisLaptop
+module.exports = TopisisHandphone

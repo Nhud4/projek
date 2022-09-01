@@ -67,6 +67,39 @@ class UserAuth {
         }
     }
 
+    async countUser() {
+        const statement = `SELECT COUNT(*) AS user FROM admin`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async countSuperAdmin() {
+        const statement = `SELECT COUNT(*) AS super_user FROM admin WHERE user_extent='super-admin'`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async countAdmin() {
+        const statement = `SELECT COUNT(*) AS admin FROM admin WHERE user_extent='admin'`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
     async insertUser(name, phone, username, password, user_extent) {
         const statement = `INSERT INTO admin(name, phone, username, password, user_extent)
         VALUES($1, $2, $3, $4, $5)`
