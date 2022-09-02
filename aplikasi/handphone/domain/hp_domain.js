@@ -38,7 +38,7 @@ class HpDomain {
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga
         } = paylaod
@@ -59,7 +59,7 @@ class HpDomain {
             chipset_id,
             internal_id,
             ram_id,
-            baterai_id,
+            batrai_id,
             kamera_id,
             harga
         )
@@ -68,6 +68,7 @@ class HpDomain {
         }
 
         const id = insertHp.data[0].id
+
         const getById = await hpModel.getById(id)
 
         const getRam = getById.data[0].ram

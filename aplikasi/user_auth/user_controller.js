@@ -67,6 +67,40 @@ class userController {
             success: true
         })
     }
+
+    async getUser(req, res) {
+        const userData = await domain.getList()
+        if (userData instanceof Error) return wrapper.responseError(res, userData)
+
+        const data = userData.data.map(item => {
+            return {
+                id: item.id,
+                name: item.name,
+                phone: item.phone,
+                username: item.username,
+                user_extent: item.user_extent
+            }
+        })
+        return wrapper.response(res, 200, {
+            message: 'register success',
+            code: 201,
+            data,
+            success: true
+        })
+    }
+
+    async deleteUser(req, res) {
+        const paylaod = { ...req.params }
+        const deleteUser = await domain.deleteUser(paylaod)
+        if (deleteUser instanceof Error) return wrapper.responseError(res, deleteUser)
+
+        return wrapper.response(res, 200, {
+            message: 'register success',
+            code: 201,
+            data: { id: paylaod.id },
+            success: true
+        })
+    }
 }
 
 module.exports = userController

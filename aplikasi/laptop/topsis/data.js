@@ -17,7 +17,10 @@ class TopisisLaptop {
         const payload = { ...req.body }
 
         const dataBobot = await bobot.getByBobot(payload)
+        if (dataBobot instanceof Error) return wrapper.responseError(res, dataBobot)
+
         const dataAlternatif = await alternatif.getByKategori(payload)
+        if (dataAlternatif instanceof Error) return wrapper.responseError(res, dataAlternatif)
 
         const pembagiC1 = await pembagi.processor(dataAlternatif.data)
         const pembagiC2 = await pembagi.ram(dataAlternatif.data)
@@ -83,7 +86,16 @@ class TopisisLaptop {
         const rangking = await rank.rangking(nilaiPrefrensi)
 
         const data = {
-            bobot: dataBobot.data[0],
+            bobot: {
+                id: dataBobot.data[0].id,
+                bobot: dataBobot.data[0].bobot,
+                processor: dataBobot.data[0].processor,
+                ram: dataBobot.data[0].ram,
+                penyimpanan: dataBobot.data[0].penyimpanan,
+                vga: dataBobot.data[0].vga,
+                display: dataBobot.data[0].display,
+                harga: dataBobot.data[0].harga
+            },
             alternatif: dataAlternatif.data,
             pembagi: {
                 c1: pembagiC1[0],
@@ -111,8 +123,7 @@ class TopisisLaptop {
             },
             idealPositif: positif,
             idealNegatif: negatif,
-            jarakIdealPositif: idealPositif,
-            jarakIdealNegatif: idealNegatif,
+            jarakIdeal: [idealPositif, idealNegatif],
             preferensi: nilaiPrefrensi,
             rank: rangking
         }

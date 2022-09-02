@@ -52,6 +52,7 @@ const router = express.Router()
 router.post("/login", basicAuth.isAuthenticated, usrtAuth.login, user.login)
 router.post('/register', basicAuth.isAuthenticated, usrtAuth.register, user.register)
 router.get('/count', user.countdata)
+router.get('/user/data', user.getUser)
 
 // laptop
 router.get('/get/merk', bearerAuth.isAuthenticated, merk.getList)
@@ -96,11 +97,11 @@ router.get('/get/laptop/by/:id=?', bearerAuth.isAuthenticated, laptop.getById)
 router.put('/update/laptop/:id=?', bearerAuth.isAuthenticated, laptop.updatelaptop)
 router.delete('/delete/laptop/:id=?', bearerAuth.isAuthenticated, laptop.deleteLaptop)
 
-router.get('/get/bobot', bearerAuth.isAuthenticated, bobot.getList)
-router.post('/add/bobot', bearerAuth.isAuthenticated, bobot.insertBobot)
-router.get('/get/bobot/by/:id=?', bearerAuth.isAuthenticated, bobot.getById)
-router.put('/update/bobot/:id=?', bearerAuth.isAuthenticated, bobot.updateBobot)
-router.delete('/delete/bobot/:id=?', bearerAuth.isAuthenticated, bobot.deleteBobot)
+router.get('/get/bobot', bobot.getList)
+router.post('/add/bobot', bobot.insertBobot)
+router.get('/get/bobot/by/:id=?', bobot.getById)
+router.put('/update/bobot/:id=?', bobot.updateBobot)
+router.delete('/delete/bobot/:id=?', bobot.deleteBobot)
 
 // hp
 router.get('/get/brand', bearerAuth.isAuthenticated, brand.getList)
@@ -150,8 +151,8 @@ router.post('/add/bobot/hp', bobotHp.insertBobot)
 router.put('/update/bobot/hp/:id=?', bobotHp.updateBobot)
 router.delete('/delete/bobot/hp/:id=?', bobotHp.deleteBobot)
 
-router.get('/topsis/laptop', topisisLaptop.data)
-router.get('/topsis/hanphone', topisisHandphone.data)
+router.post('/topsis/laptop', topisisLaptop.data)
+router.post('/topsis/hanphone', topisisHandphone.data)
 
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {
