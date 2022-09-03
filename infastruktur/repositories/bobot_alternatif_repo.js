@@ -10,6 +10,7 @@ const wrapper = new Wrapper()
 class AlternatifRepo {
     async getList() {
         const statement = `SELECT
+        bobot_alternatif.id,
         merk.merk,
         laptop.laptop,
         bobot_alternatif.processor,
@@ -38,6 +39,7 @@ class AlternatifRepo {
 
     async getKategoriGame(kategori, sub_kategori) {
         const statement = `SELECT
+        bobot_alternatif.id,
         merk.merk,
         laptop.laptop,
         bobot_alternatif.processor,
@@ -68,6 +70,7 @@ class AlternatifRepo {
 
     async getKategoriEditing(kategori, sub_kategori) {
         const statement = `SELECT
+        bobot_alternatif.id,
         merk.merk,
         laptop.laptop,
         bobot_alternatif.processor,
@@ -98,6 +101,7 @@ class AlternatifRepo {
 
     async getKategoriOffice(kategori, sub_kategori) {
         const statement = `SELECT
+        bobot_alternatif.id,
         merk.merk,
         laptop.laptop,
         bobot_alternatif.processor,

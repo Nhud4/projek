@@ -152,7 +152,7 @@ router.put('/update/bobot/hp/:id=?', bobotHp.updateBobot)
 router.delete('/delete/bobot/hp/:id=?', bobotHp.deleteBobot)
 
 router.post('/topsis/laptop', topisisLaptop.data)
-router.post('/topsis/hanphone', topisisHandphone.data)
+router.get('/topsis/hanphone', topisisHandphone.data)
 
 router.get('/', (_req, res) => {
     wrapper.response(res, 200, {

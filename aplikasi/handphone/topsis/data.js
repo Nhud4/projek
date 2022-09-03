@@ -74,6 +74,82 @@ class TopisisHandphone {
 
         const rangking = await rank.rangking(nilaiPrefrensi)
 
+        const dataAlter = dataAlternatif.data.map(item => {
+            return item.hp
+        })
+
+        const arr = [
+            dataAlter,
+            ternormalisasiC1,
+            ternormalisasiC2,
+            ternormalisasiC3,
+            ternormalisasiC4,
+            ternormalisasiC5
+        ]
+
+        var row = arr[0].length;
+        var column = arr.length;
+        var dataTerbobot = new Array();
+
+        for (let i = 0; i < row; i++) {
+            dataTerbobot[i] = new Array()
+            for (let j = 0; j < column; j++) {
+                dataTerbobot[i][j] = arr[j][i]
+            }
+
+        }
+
+        const arrNT = [
+            dataAlter,
+            normalisasiTerbobotC1,
+            normalisasiTerbobotC2,
+            normalisasiTerbobotC3,
+            normalisasiTerbobotC4,
+            normalisasiTerbobotC5
+        ]
+
+        var row = arrNT[0].length;
+        var column = arrNT.length;
+        var dataNT = new Array();
+
+        for (let i = 0; i < row; i++) {
+            dataNT[i] = new Array()
+            for (let j = 0; j < column; j++) {
+                dataNT[i][j] = arrNT[j][i]
+            }
+
+        }
+
+        const rankData = [
+            dataAlter,
+            nilaiPrefrensi,
+            rangking
+        ]
+
+        var row = rankData[0].length;
+        var column = rankData.length;
+        var dataRank = new Array();
+
+        for (let i = 0; i < row; i++) {
+            dataRank[i] = new Array()
+            for (let j = 0; j < column; j++) {
+                dataRank[i][j] = rankData[j][i]
+            }
+        }
+
+        const dataJI = [dataAlter, idealPositif, idealNegatif]
+
+        var row = dataJI[0].length;
+        var column = dataJI.length;
+        var dataJarak = new Array();
+
+        for (let i = 0; i < row; i++) {
+            dataJarak[i] = new Array()
+            for (let j = 0; j < column; j++) {
+                dataJarak[i][j] = dataJI[j][i]
+            }
+        }
+
         const data = {
             bobot: dataBobot.data[0],
             alternatif: dataAlternatif.data,
@@ -84,26 +160,12 @@ class TopisisHandphone {
                 c4: pembagiC4[0],
                 c5: pembagiC5[0]
             },
-            alternatifTerbobot: {
-                c1: ternormalisasiC1,
-                c2: ternormalisasiC2,
-                c3: ternormalisasiC3,
-                c4: ternormalisasiC4,
-                c5: ternormalisasiC5
-            },
-            normalisasiTerbobot: {
-                c1: normalisasiTerbobotC1,
-                c2: normalisasiTerbobotC2,
-                c3: normalisasiTerbobotC3,
-                c4: normalisasiTerbobotC4,
-                c5: normalisasiTerbobotC5
-            },
+            alternatifTerbobot: dataTerbobot,
+            normalisasiTerbobot: dataNT,
             idealPositif: positif,
             idealNegatif: negatif,
-            jarakIdealPositif: idealPositif,
-            jarakIdealNegatif: idealNegatif,
-            preferensi: nilaiPrefrensi,
-            rank: rangking
+            jarakIdeal: dataJarak,
+            preferensi: dataRank,
         }
 
         return wrapper.response(res, 200, {
