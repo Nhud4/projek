@@ -139,7 +139,7 @@ class AlternatifHp {
     }
 
     async countLaptop() {
-        const statement = `SELECT COUNT(*) AS laptop FROM laptop`
+        const statement = `SELECT COUNT(*) AS laptop FROM laptop WHERE deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
@@ -150,7 +150,7 @@ class AlternatifHp {
     }
 
     async countHp() {
-        const statement = `SELECT COUNT(*) AS hp FROM hp`
+        const statement = `SELECT COUNT(*) AS hp FROM hp WHERE deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err

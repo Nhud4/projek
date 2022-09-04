@@ -10,13 +10,20 @@ const wrapper = new Wrapper()
 class Hp {
     async getList() {
         const statement = `SELECT
+        hp.id,
+        brand.id AS brandId,
         brand.brand,
         hp.hp,
+        chipset.id AS chipsetId,
         chipset.chipset,
         chipset.versi,
+        internal.id AS internalId,
         internal.internal,
+        ram_hp.id AS ramId,
         ram_hp.ram,
+        batrai.id AS batraiId,
         batrai.batrai,
+        kamera.id AS kameraId,
         kamera.type,
         kamera.kamera_depan,
         kamera.kamera_belakang,
@@ -45,13 +52,20 @@ class Hp {
 
     async getById(id) {
         const statement = `SELECT
+        hp.id,
+        brand.id AS brandId,
         brand.brand,
         hp.hp,
+        chipset.id AS chipsetId,
         chipset.chipset,
         chipset.versi,
+        internal.id AS internalId,
         internal.internal,
+        ram_hp.id AS ramId,
         ram_hp.ram,
+        batrai.id AS batraiId,
         batrai.batrai,
+        kamera.id AS kameraId,
         kamera.type,
         kamera.kamera_depan,
         kamera.kamera_belakang,
@@ -84,6 +98,7 @@ class Hp {
         const data = [hp]
         try {
             const result = await db.query(statement, data)
+            console.log(result)
             if (result.err) throw result.err
             return wrapper.data(result.data)
         } catch (err) {

@@ -95,7 +95,7 @@ class userController {
         if (deleteUser instanceof Error) return wrapper.responseError(res, deleteUser)
 
         return wrapper.response(res, 200, {
-            message: 'register success',
+            message: 'success deleted user',
             code: 201,
             data: { id: paylaod.id },
             success: true

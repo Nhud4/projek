@@ -68,7 +68,7 @@ class UserAuth {
     }
 
     async countUser() {
-        const statement = `SELECT COUNT(*) AS user FROM admin`
+        const statement = `SELECT COUNT(*) AS user FROM admin WHERE deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
@@ -79,7 +79,8 @@ class UserAuth {
     }
 
     async countSuperAdmin() {
-        const statement = `SELECT COUNT(*) AS super_user FROM admin WHERE user_extent='super-admin'`
+        const statement = `SELECT COUNT(*) AS super_user FROM admin WHERE user_extent='super-admin'
+        AND deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
@@ -90,7 +91,8 @@ class UserAuth {
     }
 
     async countAdmin() {
-        const statement = `SELECT COUNT(*) AS admin FROM admin WHERE user_extent='admin'`
+        const statement = `SELECT COUNT(*) AS admin FROM admin WHERE user_extent='admin'
+        AND deleted_at IS NULL`
         try {
             const result = await db.query(statement)
             if (result.err) throw result.err
@@ -133,7 +135,7 @@ class UserAuth {
     }
 
     async deleteUser(id) {
-        const statement = `UPDATE user SET deleted_at =NOW() WHERE id =$1`
+        const statement = `UPDATE admin SET deleted_at =NOW() WHERE id =$1`
         const data = [id]
         try {
             const result = await db.query(statement, data)

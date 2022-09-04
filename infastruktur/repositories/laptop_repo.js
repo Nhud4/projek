@@ -50,17 +50,23 @@ const getListLaptop = async () => {
 const getById = async (id) => {
     const statement = `SELECT
     laptop.id, 
+    merk.id AS merkId,
     merk.merk,
     laptop.laptop, 
+    processor.id AS processorId,
     processor.processor,
     processor.seri_processor,
     processor.kecepatan_processor,
+    ram.id AS ramId,
     ram.type_ram,
     ram.kapasitas_ram,
+    penyimpanan.id AS penyimpananId,
     penyimpanan.type_penyimpanan,
     penyimpanan.kapasitas_penyimpanan,
+    vga.id AS vgaId,
     vga.merk_vga,
     vga.kapasitas_vga,
+    display.id AS displayId,
     display.type_display,
     display.ukuran_display, 
     laptop.harga
@@ -189,7 +195,6 @@ const updateLaptop = async (
     ]
     try {
         const result = await db.query(statement, data)
-        console.log(result)
         if (result.err) throw result.err
         return wrapper.data(result.data)
     } catch (err) {

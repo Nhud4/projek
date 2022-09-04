@@ -53,6 +53,7 @@ router.post("/login", basicAuth.isAuthenticated, usrtAuth.login, user.login)
 router.post('/register', basicAuth.isAuthenticated, usrtAuth.register, user.register)
 router.get('/count', user.countdata)
 router.get('/user/data', user.getUser)
+router.delete('/user/delete/:id=?', user.deleteUser)
 
 // laptop
 router.get('/get/merk', bearerAuth.isAuthenticated, merk.getList)
