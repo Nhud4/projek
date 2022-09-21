@@ -1,6 +1,5 @@
 const {
     InternalServerError,
-    UnprocessableEntityError,
     NotFoundError
 } = require('../../../helper/error')
 const AlternatifHp = require('../../../infastruktur/repositories/alternatif_hp_repo')
@@ -8,24 +7,47 @@ const AlternatifHp = require('../../../infastruktur/repositories/alternatif_hp_r
 const alternaitf = new AlternatifHp()
 
 class AlternatifHpDomain {
-    async getList() {
-        const getList = await alternaitf.getLis()
+    async getList(paylaod) {
+        const {
+            harga1,
+            harga2,
+            ram,
+            internal
+        } = paylaod
+        const getList = await alternaitf.getLis(
+            harga1,
+            harga2,
+            ram,
+            internal
+        )
         if (getList.err) {
             return new InternalServerError('fail to get data')
         }
         return getList
     }
 
-    async getByBrand(paylaod) {
-        const { brand } = paylaod
-        const getByBrand = await alternaitf.getBYBrand(brand)
+    async getByHarga(paylaod) {
+        const {
+            harga1,
+            harga2
+        } = paylaod
+        const getByBrand = await alternaitf.getBYHarga(harga1, harga2)
         if (getByBrand.err) {
             return new InternalServerError('fail to get data')
         }
-        if (getByBrand.data.length === 0) {
-            return new NotFoundError('data not found')
-        }
         return getByBrand
+    }
+
+    async getBySpek(paylaod) {
+        const {
+            ram,
+            internal
+        } = paylaod
+        const getBySpek = await alternaitf.getBYSpek(ram, internal)
+        if (getBySpek.err) {
+            return new InternalServerError('fail to get data')
+        }
+        return getBySpek
     }
 }
 

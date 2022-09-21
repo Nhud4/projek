@@ -8,7 +8,12 @@ const db = new Postgres({ connectionString: postgres.url })
 const wrapper = new Wrapper()
 
 class AlternatifHp {
-    async getLis() {
+    async getLis(
+        harga1,
+        harga2,
+        ram,
+        internal
+    ) {
         const statement = `SELECT
         brand.brand,
         hp.hp,
@@ -18,13 +23,22 @@ class AlternatifHp {
         bobot_alternatif_hp.kamera,
         bobot_alternatif_hp.harga
         FROM bobot_alternatif_hp
-        INNER JOIN hp
-        ON bobot_alternatif_hp.hp_id = hp.id
-        INNER JOIN brand
-        ON hp.brand_id = brand.id
-        WHERE bobot_alternatif_hp.deleted_at IS NULL`
+        INNER JOIN hp ON bobot_alternatif_hp.hp_id = hp.id
+        INNER JOIN brand ON hp.brand_id = brand.id
+		INNER JOIN ram_hp ON ram_hp.id = hp.ram_id
+		INNER JOIN internal ON internal.id = hp.internal_id
+        WHERE hp.harga BETWEEN $1 AND $2
+		AND ram_hp.ram = $3
+		AND internal.internal = $4
+		AND bobot_alternatif_hp.deleted_at IS NULL`
+        const data = [
+            harga1,
+            harga2,
+            ram,
+            internal
+        ]
         try {
-            const result = await db.query(statement)
+            const result = await db.query(statement, data)
             if (result.err) throw result.err
             return wrapper.data(result.data)
         } catch (err) {
@@ -32,9 +46,9 @@ class AlternatifHp {
         }
     }
 
-    async getBYBrand(brand) {
+    async getBYHarga(harga1, harga2) {
         const statement = `SELECT
-        hp.merk,
+        brand.brand,
         hp.hp,
         bobot_alternatif_hp.ram,
         bobot_alternatif_hp.internal,
@@ -42,13 +56,38 @@ class AlternatifHp {
         bobot_alternatif_hp.kamera,
         bobot_alternatif_hp.harga
         FROM bobot_alternatif_hp
-        INNER JOIN hp
-        ON bobot_alternatif_hp.hp_id = hp.id
-        INNER JOIN brand
-        ON hp.brand_id = brand.id
-        WHERE brand.brand =$1
-        AND bobot_alternatif_hp.deleted_at IS NULL`
-        const data = [brand]
+        INNER JOIN hp ON bobot_alternatif_hp.hp_id = hp.id
+        INNER JOIN brand ON hp.brand_id = brand.id
+        WHERE hp.harga BETWEEN $1 AND $2
+		AND bobot_alternatif_hp.deleted_at IS NULL`
+        const data = [harga1, harga2]
+        try {
+            const result = await db.query(statement, data)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async getBYSpek(ram, internal) {
+        const statement = `SELECT
+        brand.brand,
+        hp.hp,
+        bobot_alternatif_hp.ram,
+        bobot_alternatif_hp.internal,
+        bobot_alternatif_hp.batrai,
+        bobot_alternatif_hp.kamera,
+        bobot_alternatif_hp.harga
+        FROM bobot_alternatif_hp
+        INNER JOIN hp ON bobot_alternatif_hp.hp_id = hp.id
+        INNER JOIN brand ON hp.brand_id = brand.id
+		INNER JOIN ram_hp ON ram_hp.id = hp.ram_id
+		INNER JOIN internal ON internal.id = hp.internal_id
+		AND ram_hp.ram = $1
+		AND internal.internal = $2
+		AND bobot_alternatif_hp.deleted_at IS NULL`
+        const data = [ram, internal]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
