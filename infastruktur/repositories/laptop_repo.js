@@ -202,11 +202,35 @@ const updateLaptop = async (
     }
 }
 
+const maxHarga = async () => {
+    const statement = `SELECT MAX(harga) FROM laptop`
+    try {
+        const result = await db.query(statement)
+        if (result.err) throw result.err
+        return wrapper.data(result.data)
+    } catch (err) {
+        return wrapper.error(err.message)
+    }
+}
+
+const minHarga = async () => {
+    const statement = `SELECT MIN(harga) FROM laptop`
+    try {
+        const result = await db.query(statement)
+        if (result.err) throw result.err
+        return wrapper.data(result.data)
+    } catch (err) {
+        return wrapper.error(err.message)
+    }
+}
+
 module.exports = {
     getListLaptop,
     getById,
     getByLaptop,
     insertLaptop,
     deleteLaptop,
-    updateLaptop
+    updateLaptop,
+    maxHarga,
+    minHarga
 }

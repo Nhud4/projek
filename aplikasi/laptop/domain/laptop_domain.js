@@ -210,10 +210,54 @@ const updateLaptop = async (payload) => {
     return updateLaptop
 }
 
+const count = async () => {
+    const getList = await laptopRepo.getListLaptop()
+    if (getList.err) {
+        return new InternalServerError('fail to get data')
+    }
+
+    const count = getList.data
+    let result = count.reduce(function (r, a) {
+        r[a.merk] = r[a.merk] || [];
+        r[a.merk].push(a);
+        return r;
+    }, Object.create(null));
+
+    if (result.err) {
+        return new InternalServerError('fail to get count data')
+    }
+
+    return result
+}
+
+const rentangHargaMax = async () => {
+    const max = await laptopRepo.maxHarga()
+
+    if (max.err) {
+        return new InternalServerError('fail to get data')
+    }
+
+    return max
+}
+
+const rentangHargaMin = async () => {
+    const min = await laptopRepo.minHarga()
+
+    if (min.err) {
+        return new InternalServerError('fail to get data')
+    }
+
+    return min
+}
+
+
 module.exports = {
     getList,
     getByKd,
     insertLaptop,
     deleteLaptop,
-    updateLaptop
+    updateLaptop,
+    count,
+    rentangHargaMax,
+    rentangHargaMin
 }

@@ -1,5 +1,11 @@
 const Wrapper = require('../../../helper/utils/wrapper')
 const laptopDomain = require('../domain/laptop_domain')
+const merkDomain = require('../domain/merk_domain')
+const penyimpananDomain = require('../domain/penyimpanan_domain')
+const processorDomain = require('../domain/processor_domain')
+const ramDomain = require('../domain/ram_domain')
+const vgaDomain = require('../domain/vga_domain')
+const displayDomain = require('../domain/display_domain')
 
 const wrapper = new Wrapper()
 
@@ -83,6 +89,68 @@ class LaptopController {
             message: 'berhasil menghapus data',
             code: 200,
             data: { id: paylaod.id },
+            success: true
+        })
+    }
+
+    async count(req, res) {
+        const count = await laptopDomain.count()
+        if (count instanceof Error) return wrapper.responseError(res, count)
+
+        const data = [{
+            HP: count.HP.length,
+            lenuvo: count.LENUVO.length,
+            acer: count.ACER.length,
+            dell: count.DELL.length,
+            asus: count.ASUS.length
+        }]
+
+        return wrapper.response(res, 200, {
+            message: 'berhasil menghapus data',
+            code: 200,
+            data,
+            success: true
+        })
+    }
+
+    async countSpesifikasi(req, res) {
+        const processor = await processorDomain.getList()
+        const ram = await ramDomain.getList()
+        const penyimpanan = await penyimpananDomain.getList()
+        const vga = await vgaDomain.getList()
+        const display = await displayDomain.getList()
+
+        const data = {
+            processor: processor.data.length,
+            ram: ram.data.length,
+            penyimpanan: penyimpanan.data.length,
+            vga: vga.data.length,
+            display: display.data.length
+        }
+
+        return wrapper.response(res, 200, {
+            message: 'berhasil menghapus data',
+            code: 200,
+            data,
+            success: true
+        })
+    }
+
+    async rentang(req, res) {
+        const max = await laptopDomain.rentangHargaMax()
+        const min = await laptopDomain.rentangHargaMin()
+        if (max instanceof Error) return wrapper.responseError(res, max)
+        if (min instanceof Error) return wrapper.responseError(res, min)
+
+        const data = {
+            max: max.data[0].max,
+            min: min.data[0].min
+        }
+
+        return wrapper.response(res, 200, {
+            message: 'berhasil menghapus data',
+            code: 200,
+            data,
             success: true
         })
     }
