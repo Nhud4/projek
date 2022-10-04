@@ -87,7 +87,7 @@ class TopisisHandphone {
         const rangking = await rank.rangking(nilaiPrefrensi)
 
         const dataAlter = dataAlternatif.data.map(item => {
-            return item.hp
+            return [item.brand, item.hp]
         })
 
         const arr = [
@@ -261,7 +261,7 @@ class TopisisHandphone {
         const rangking = await rank.rangking(nilaiPrefrensi)
 
         const dataAlter = dataAlternatif.data.map(item => {
-            return item.hp
+            return [item.brand, item.hp]
         })
 
         const arr = [
@@ -435,7 +435,7 @@ class TopisisHandphone {
         const rangking = await rank.rangking(nilaiPrefrensi)
 
         const dataAlter = dataAlternatif.data.map(item => {
-            return item.hp
+            return [item.brand, item.hp]
         })
 
         const arr = [

@@ -12,13 +12,17 @@ class AlternatifHpDomain {
             harga1,
             harga2,
             ram,
-            internal
+            internal,
+            kamera_id,
+            batrai_id
         } = paylaod
         const getList = await alternaitf.getLis(
             harga1,
             harga2,
             ram,
-            internal
+            internal,
+            kamera_id,
+            batrai_id
         )
         if (getList.err) {
             return new InternalServerError('fail to get data')
@@ -41,9 +45,16 @@ class AlternatifHpDomain {
     async getBySpek(paylaod) {
         const {
             ram,
-            internal
+            internal,
+            kamera_id,
+            batrai_id
         } = paylaod
-        const getBySpek = await alternaitf.getBYSpek(ram, internal)
+        const getBySpek = await alternaitf.getBYSpek(
+            ram,
+            internal,
+            kamera_id,
+            batrai_id
+        )
         if (getBySpek.err) {
             return new InternalServerError('fail to get data')
         }

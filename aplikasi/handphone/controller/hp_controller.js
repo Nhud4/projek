@@ -86,6 +86,39 @@ class HpController {
             success: true
         })
     }
+
+    async countData(req, res) {
+        const getData = await domain.countData()
+        if (getData instanceof Error) return wrapper.responseError(res, getData)
+
+        const data = {
+            REALME: getData.REALME.length,
+            INFINIX: getData.INFINIX.length,
+            SAMSUNG: getData.SAMSUNG.length,
+            VIVO: getData.VIVO.length,
+            OPPO: getData.OPPO.length,
+            XIAOMI: getData.XIAOMI.length
+        }
+
+        return wrapper.response(res, 200, {
+            message: 'berhasil menghapus data',
+            code: 200,
+            data,
+            success: true
+        })
+    }
+
+    async rentang(req, res) {
+        const rentang = await domain.rentang()
+        if (rentang instanceof Error) return wrapper.responseError(res, rentang)
+
+        return wrapper.response(res, 200, {
+            message: 'berhasil menghapus data',
+            code: 200,
+            data: rentang,
+            success: true
+        })
+    }
 }
 
 module.exports = HpController

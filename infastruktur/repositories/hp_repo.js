@@ -199,6 +199,28 @@ class Hp {
             return wrapper.error(err.message)
         }
     }
+
+    async maxHarga() {
+        const statement = `SELECT MAX(harga) FROM hp`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
+
+    async minHarga() {
+        const statement = `SELECT MIN(harga) FROM hp`
+        try {
+            const result = await db.query(statement)
+            if (result.err) throw result.err
+            return wrapper.data(result.data)
+        } catch (err) {
+            return wrapper.error(err.message)
+        }
+    }
 }
 
 module.exports = Hp

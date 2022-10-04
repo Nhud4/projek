@@ -195,6 +195,41 @@ class HpDomain {
 
         return deleteHp
     }
+
+    async countData() {
+        const getData = await hpModel.getList()
+        if (getData.err) {
+            return new InternalServerError('fail to get data')
+        }
+
+        const count = getData.data
+        let result = count.reduce(function (r, a) {
+            r[a.brand] = r[a.brand] || [];
+            r[a.brand].push(a);
+            return r;
+        }, Object.create(null));
+
+        if (result.err) {
+            return new InternalServerError('fail to get count data')
+        }
+
+        return result
+    }
+
+    async rentang() {
+        const max = await hpModel.maxHarga()
+        const min = await hpModel.minHarga()
+        if (max.err || min.err) {
+            return new InternalServerError('fail to get data')
+        }
+
+        const data = {
+            max: max.data[0].max,
+            min: min.data[0].min
+        }
+
+        return data
+    }
 }
 
 module.exports = HpDomain

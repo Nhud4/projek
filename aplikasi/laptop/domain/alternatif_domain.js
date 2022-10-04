@@ -54,6 +54,60 @@ class AlternatifLaptopDomain {
             return getKategoriOffice
         }
     }
+
+    async getAlternatifSpek(paylaod) {
+        const { kategori, processor, ram, penyimpanan, vga, display } = paylaod
+        if (kategori === 'game') {
+            const game = await alternatif.getSpekGame(
+                kategori,
+                processor,
+                ram,
+                penyimpanan,
+                vga,
+                display)
+            if (game.err) {
+                return new InternalServerError('fail to get alternatof bobot')
+            }
+            if (game.data.length === 0) {
+                return new NotFoundError('alternatif not found')
+            }
+            return game
+        }
+
+        if (kategori === 'editing') {
+            const editing = await alternatif.getSpekEditing(
+                kategori,
+                processor,
+                ram,
+                penyimpanan,
+                vga,
+                display)
+            if (editing.err) {
+                return new InternalServerError('fail to get alternatof bobot')
+            }
+            if (editing.data.length === 0) {
+                return new NotFoundError('alternatif not found')
+            }
+            return editing
+        }
+
+        if (kategori === 'office') {
+            const office = await alternatif.getSpekOffice(
+                kategori,
+                processor,
+                ram,
+                penyimpanan,
+                vga,
+                display)
+            if (office.err) {
+                return new InternalServerError('fail to get alternatof bobot')
+            }
+            if (office.data.length === 0) {
+                return new NotFoundError('alternatif not found')
+            }
+            return office
+        }
+    }
 }
 
 module.exports = AlternatifLaptopDomain

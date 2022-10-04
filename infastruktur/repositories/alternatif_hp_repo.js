@@ -12,7 +12,9 @@ class AlternatifHp {
         harga1,
         harga2,
         ram,
-        internal
+        internal,
+        kamera_id,
+        batrai_id
     ) {
         const statement = `SELECT
         brand.brand,
@@ -30,12 +32,16 @@ class AlternatifHp {
         WHERE hp.harga BETWEEN $1 AND $2
 		AND ram_hp.ram = $3
 		AND internal.internal = $4
+        AND bobot_alternatif_hp.kamera = $5
+		AND bobot_alternatif_hp.batrai = $6
 		AND bobot_alternatif_hp.deleted_at IS NULL`
         const data = [
             harga1,
             harga2,
             ram,
-            internal
+            internal,
+            kamera_id,
+            batrai_id
         ]
         try {
             const result = await db.query(statement, data)
@@ -70,7 +76,7 @@ class AlternatifHp {
         }
     }
 
-    async getBYSpek(ram, internal) {
+    async getBYSpek(ram, internal, kamera_id, batrai_id) {
         const statement = `SELECT
         brand.brand,
         hp.hp,
@@ -86,8 +92,10 @@ class AlternatifHp {
 		INNER JOIN internal ON internal.id = hp.internal_id
 		AND ram_hp.ram = $1
 		AND internal.internal = $2
+        AND bobot_alternatif_hp.kamera = $3
+		AND bobot_alternatif_hp.batrai = $4
 		AND bobot_alternatif_hp.deleted_at IS NULL`
-        const data = [ram, internal]
+        const data = [ram, internal, kamera_id, batrai_id]
         try {
             const result = await db.query(statement, data)
             if (result.err) throw result.err
